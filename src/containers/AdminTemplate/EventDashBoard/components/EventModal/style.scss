@@ -1,0 +1,30 @@
+.event-form__input-label {
+  &:hover,
+  &:focus,
+  &.Mui-focused {
+    color: var(--primary);
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+}
+
+.event-form__error {
+  &.muioutlinedinput-root {
+    & fieldset {
+      border-color: red;
+    }
+  }
+}
+
+.modal__img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (max-width: 739px) {
+  .event-modal {
+    width: 96%;
+  }
+}

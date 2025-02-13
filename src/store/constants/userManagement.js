@@ -1,0 +1,12 @@
+export const GET_USER_DELETE_REQUEST = "@eventListReducer/GET_USER_DELETE_REQUEST ";
+export const GET_USER_DELETE_SUCCESS = "@eventListReducer/GET_USER_DELETE_SUCCESS";
+export const GET_USER_DELETE_FAIL = "@eventListReducer/GET_USER_DELETE_FAIL";
+export const GET_USER_ADD_REQUEST = "@eventListReducer/GET_USER_ADD_REQUEST ";
+export const GET_USER_ADD_SUCCESS = "@eventListReducer/GET_USER_ADD_SUCCESS";
+export const GET_USER_ADD_FAIL = "@eventListReducer/GET_USER_ADD_FAIL";
+export const GET_USER_EDIT_REQUEST = "@eventListReducer/GET_USER_EDIT_REQUEST ";
+export const GET_USER_EDIT_SUCCESS = "@eventListReducer/GET_USER_EDIT_SUCCESS";
+export const GET_USER_EDIT_FAIL = "@eventListReducer/GET_USER_EDIT_FAIL";
+export const GET_USER_SEARCH_REQUEST = "@eventListReducer/GET_USER_SEARCH_REQUEST ";
+export const GET_USER_SEARCH_SUCCESS = "@eventListReducer/GET_USER_SEARCH_SUCCESS";
+export const GET_USER_SEARCH_FAIL = "@eventListReducer/GET_USER_SEARCH_FAIL";
