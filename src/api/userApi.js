@@ -8,7 +8,7 @@ const userApi = {
     return axiosClient.post(url, user);
   },
   register: (user) => {
-    const url = resourceName + "DangKy";
+    const url = resourceName + "register";
     return axiosClient.post(url, user);
   },
   getUser: (request) => {

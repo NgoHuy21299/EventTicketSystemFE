@@ -71,20 +71,19 @@ const RegisterPage = () => {
         setLoading(true);
 
         // Register
-        user = {
-          hoTen: user.fullName,
-          taiKhoan: user.username,
-          email: user.email,
-          soDt: user.phoneNumber,
-          matKhau: user.password,
-          maNhom: GROUP_ID,
+        const registerUser = {
+          fullName: user?.fullName,
+          email: user?.email,
+          phoneNumber: user?.phoneNumber,
+          password: user?.password,
         };
-        user = await userApi.register(user);
+
+        await userApi.register(registerUser);
 
         // Login automatically if registering successfully
-        user = { taiKhoan: user.taiKhoan, matKhau: user.matKhau };
-        user = await userApi.login(user);
-        auth.login(user);
+        const loginUser = { email: user?.email, password: user?.password };
+        const loggedinUser = await userApi.login(loginUser);
+        auth.login(loggedinUser);
         navigate("/", { replace: true });
       } catch (error) {
         setError(error);
@@ -108,7 +107,6 @@ const RegisterPage = () => {
         </Alert>
       )}
       <Input name="fullName" control={control} label="Họ và tên" />
-      <Input name="username" control={control} label="Tài khoản" />
       <Input name="email" control={control} type="email" label="Email" />
       <Input name="phoneNumber" control={control} label="Số điện thoại" />
       <Input

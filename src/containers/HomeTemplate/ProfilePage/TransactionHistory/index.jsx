@@ -85,9 +85,8 @@ TablePaginationActions.propTypes = {
 
 const columns = [
   { id: "ticket-id", label: "Mã vé", align: "center", minWidth: 80 },
-  { id: "event-name", label: "Tên phim", align: "center", minWidth: 100 },
-  { id: "showtime", label: "Ngày chiếu", align: "center", minWidth: 170 },
-  // { id: "movie-duration", label: "Thời lượng", align: "center", minWidth: 120 },
+  { id: "event-name", label: "Tên sự kiện", align: "center", minWidth: 100 },
+  { id: "showtime", label: "Ngày diễn ra", align: "center", minWidth: 170 },
   {
     id: "venue",
     label: "Địa chỉ",
@@ -149,8 +148,7 @@ const TransactionHistory = () => {
         <TableRow key={row.bookedAt}>
           <TableCell align="center">{row?.bookingId}</TableCell>
           <TableCell align="center">{row?.eventName}</TableCell>
-          <TableCell align="center">
-            {row?.eventTime.substring(0, 5)}, {moment(row?.eventDate).format("DD/MM/YYYY")}
+          <TableCell align="center">{row?.eventDate}
           </TableCell>
           <TableCell align="center">{row.venue}</TableCell>
           {/* <TableCell align="center">
