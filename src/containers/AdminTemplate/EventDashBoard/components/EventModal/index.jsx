@@ -41,6 +41,8 @@ const style = {
   border: "1px solid #000",
   boxShadow: 24,
   p: 4,
+  maxHeight: "80vh", // Set max height for the modal
+  overflowY: "auto", // Allow vertical scrolling
 };
 
 function EventModal(props) {
@@ -89,8 +91,8 @@ function EventModal(props) {
   const fetchEventAdd = async (formData) => {
     try {
       await eventApi.addEvent(formData);
-      setOpenModalEvent(false);
-      window.location.reload();
+      // setOpenModalEvent(false);
+      // window.location.reload();
     } catch (error) {
       setServerError(error);
     }
@@ -112,15 +114,13 @@ function EventModal(props) {
       initialValues: modalType === "addEvent" ? initialValuesAddEvent : initialValuesEditEvent,
       validationSchema: eventSchema,
       onSubmit: (values) => {
-        values.groupId = GROUP_ID;
-
         let formData = new FormData();
         for (var key in values) {
           if (key !== "imageUrls") {
             formData.append(key, values[key]);
           } else {
-            if (values.imageUrls !== null) {
-              formData.append("File", values.imageUrls, values.imageUrls.name);
+            if (values.imageUrls !== null && values.imageUrls !== "") {
+              formData.append("image", values.imageUrls);
             }
           }
         }
@@ -141,8 +141,13 @@ function EventModal(props) {
   }, [eventId]);
 
   const handleChangeDatePicker = (date) => {
-    let startDate = moment(date).format("DD/MM/YYYY");
+    let startDate = moment(date).toISOString();
     setFieldValue("startDate", startDate);
+  };
+
+  const handleChangeDatePickerEndDate = (date) => {
+    let endDate = moment(date).toISOString();
+    setFieldValue("endDate", endDate);
   };
 
   const handleChangeSwitch = (name) => {
@@ -249,13 +254,75 @@ function EventModal(props) {
                     style={{ width: "fit-content" }}
                     onChange={handleChangeDatePicker}
                     onBlur={handleBlur}
-                    inputFormat={"DD/MM/YYYY"}
                     value={values.startDate || null}
                   />
                   {errors.startDate && touched.startDate && (
                     <FormHelperText error>{errors.startDate}</FormHelperText>
                   )}
                 </Box>
+              </FormControl>
+              
+              <FormControl className="form__input-wrapper">
+                <Box sx={{ flexDirection: "row", display: "flex", alignItems: "center" }}>
+                  <FormLabel
+                    className="event-form__input-label"
+                    htmlFor="event-end-date"
+                    sx={{ mr: 1 }}
+                  >
+                    Ngày kết thúc
+                  </FormLabel>
+
+                  <MuiDatePicker
+                    name="endDate"
+                    id="event-end-date"
+                    style={{ width: "fit-content" }}
+                    onChange={handleChangeDatePickerEndDate}
+                    onBlur={handleBlur}
+                    value={values.endDate || null}
+                  />
+                  {errors.endDate && touched.endDate && (
+                    <FormHelperText error>{errors.endDate}</FormHelperText>
+                  )}
+                </Box>
+              </FormControl>
+
+              <FormControl fullWidth className="form__input-wrapper">
+                <FormLabel className="event-form__input-label" htmlFor="venue-address">
+                  Địa chỉ
+                </FormLabel>
+                <TextField
+                  name="venueAddress"
+                  id="venue-address"
+                  variant="outlined"
+                  fullWidth
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.venueAddress}
+                  error={errors.venueAddress && touched.venueAddress ? true : false}
+                />
+                {errors.venueAddress && touched.venueAddress && (
+                  <FormHelperText error>{errors.venueAddress}</FormHelperText>
+                )}
+              </FormControl>
+
+              <FormControl fullWidth className="form__input-wrapper">
+                <FormLabel className="event-form__input-label" htmlFor="seat-price">
+                  Giá vé
+                </FormLabel>
+                <TextField
+                  name="seatPrice"
+                  id="seat-price"
+                  type="number"
+                  variant="outlined"
+                  fullWidth
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.seatPrice}
+                  error={errors.seatPrice && touched.seatPrice ? true : false}
+                />
+                {errors.seatPrice && touched.seatPrice && (
+                  <FormHelperText error>{errors.seatPrice}</FormHelperText>
+                )}
               </FormControl>
               {/* Add more input fields similar to the ones above based on the event details */}
 
@@ -283,6 +350,7 @@ function EventModal(props) {
                   className="modal__img"
                 />
               </FormControl>
+
 
               <Box sx={{ mt: 2 }}>
                 <SubmitButton>{button}</SubmitButton>

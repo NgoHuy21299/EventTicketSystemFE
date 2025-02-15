@@ -210,7 +210,7 @@ function MuiEnhancedTable(props) {
 
   const handleDeleteItem = async (id) => {
     const msg =
-      tableType === "user" ? "Bạn có chắc muốn xoá tài khoản " : "Bạn có chắc muốn xoá phim có mã ";
+      tableType === "user" ? "Bạn có chắc muốn xoá tài khoản " : "Bạn có chắc muốn xoá event có mã ";
 
     if (window.confirm(msg + id)) {
       if (tableType === "user") {
