@@ -3,13 +3,13 @@ import * as actType from "../constants/eventList";
 import { GROUP_ID } from "@/constants";
 import { eventApi } from "@/api";
 
-const actGetEventList = (evntFilter) => {
+const actGetEventList = (eventFilter) => {
   return (dispatch) => {
     dispatch(actGetEventListRequest());
 
     const fetchEventList = async () => {
       try {
-        const eventList = await eventApi.getEventList(evntFilter);
+        const eventList = await eventApi.getEventList(eventFilter);
         dispatch(actGetEventListSuccess(eventList));
       } catch (error) {
         dispatch(actGetEventListFail(error));

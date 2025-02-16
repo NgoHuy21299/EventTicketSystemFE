@@ -91,8 +91,8 @@ function EventModal(props) {
   const fetchEventAdd = async (formData) => {
     try {
       await eventApi.addEvent(formData);
-      // setOpenModalEvent(false);
-      // window.location.reload();
+      setOpenModalEvent(false);
+      window.location.reload();
     } catch (error) {
       setServerError(error);
     }

@@ -25,7 +25,7 @@ const eventApi = {
     return axiosClient.get(url);
   },
   deleteEvent: (params) => {
-    const url = resourceName + `/XoaPhim?MaPhim=${params}`;
+    const url = resourceName + `/${params}`;
     return axiosClient.delete(url);
   },
   addEvent: (formData) => {

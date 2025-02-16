@@ -24,7 +24,7 @@ function EventDashBoard() {
   const eventList = useSelector(
     (state) => {
       console.log(state?.eventList?.data);
-      return state?.eventList?.data?.events
+      return state?.eventList?.data;
     }
   );
   const eventListLoading = useSelector((state) => state.eventList.loading);
@@ -35,7 +35,7 @@ function EventDashBoard() {
 
   const handleSearch = (value) => {
     setSearch(value);
-    const filterRequest = { 
+    const filterRequest = {
       search: value
     };
     dispatch(actGetEventList(filterRequest));
