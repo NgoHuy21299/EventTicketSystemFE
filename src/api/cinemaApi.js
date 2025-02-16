@@ -11,10 +11,7 @@ const cinemaApi = {
     const url = resourceName + "LayThongTinLichChieuPhim";
     return axiosClient.get(url, { params });
   },
-  getCinemaSystemList: (params) => {
-    const url = resourceName + "LayThongTinHeThongRap";
-    return axiosClient.get(url, { params });
-  },
+
   getCinemaGroupBySystem: (params) => {
     const url = resourceName + `LayThongTinCumRapTheoHeThong?maHeThongRap=${params}`;
     return axiosClient.get(url);

@@ -41,18 +41,6 @@ function ScheduleModal({ eventId, openScheduleModal, setOpenScheduleModal }) {
     cineGroup: [],
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await cinemaApi.getCinemaSystemList();
-        setCineValue({ ...cineValue, cineSystem: result });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
-
   const { errors, touched, setFieldValue, handleSubmit, handleChange, handleBlur } = useFormik({
     initialValues: {
       ngayChieuGioChieu: "",
