@@ -13,9 +13,9 @@ const UserDashboard = lazy(() => import("@/containers/AdminTemplate/UserDashBoar
 const AdminRoutes = {
   path: "admin",
   element: (
-    // <RequireAuth roles={[ROLE.ADMIN]}>
-    <AdminTemplate />
-    // </RequireAuth>
+    <RequireAuth roles={[ROLE.ADMIN]}>
+      <AdminTemplate />
+    </RequireAuth>
   ),
   children: [
     { path: "", element: <Navigate to="user-management" /> },

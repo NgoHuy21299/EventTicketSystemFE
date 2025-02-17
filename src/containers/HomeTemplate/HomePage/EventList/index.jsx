@@ -3,13 +3,12 @@ import "./style.scss";
 
 //Material UI
 import { Box, Button, Container, Typography } from "@mui/material";
-import { SET_MOVIE_TYPE_NOW, SET_MOVIE_TYPE_SOON } from "@/store/constants/eventList";
-import { faAngleDoubleRight, faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { SET_MOVIE_TYPE_NOW } from "@/store/constants/eventList";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 
 //FontAwesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
 import Loader from "@/components/Loader";
 //Components
 import MultipleItems from "@/components/ReactSlick/MultipleItems";
@@ -25,8 +24,6 @@ function EventList() {
   const eventList = useSelector((state) => state.eventList.data);
   const loading = useSelector((state) => state.eventList.loading);
   const eventType = useSelector((state) => state.eventList.eventType);
-
-  let eventTypeList;
 
   const handleEventType = () => {
     return eventList;

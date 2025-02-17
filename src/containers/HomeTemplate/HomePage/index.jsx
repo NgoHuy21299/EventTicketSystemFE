@@ -1,7 +1,6 @@
 import "./style.scss";
 
 import Carousel from "@/containers/HomeTemplate/HomePage/Carousel";
-import CinemaSystem from "./CinemaSystem";
 import EventList from "./EventList";
 
 function HomePage() {
@@ -9,7 +8,6 @@ function HomePage() {
     <div id="home-page">
       <Carousel />
       <EventList />
-      {/* <CinemaSystem /> */}
     </div>
   );
 }

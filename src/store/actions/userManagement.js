@@ -1,5 +1,4 @@
 import * as actType from "../constants/userManagement";
-import { GROUP_ID } from "@/constants";
 import { userApi } from "@/api";
 
 const actUserDeleteRequest = () => {
