@@ -17,11 +17,15 @@ import actGetEventList from "@/store/actions/eventList";
 import { headCells } from "./constants";
 
 function EventDashBoard() {
+
   const [openModalEvent, setOpenModalEvent] = useState(false);
+  const [search, setSearch] = useState("");
   const dispatch = useDispatch();
   const eventList = useSelector(
-    (state) => 
-      state?.eventList?.data
+    (state) => {
+      console.log(state?.eventList?.data);
+      return state?.eventList?.data;
+    }
   );
   const eventListLoading = useSelector((state) => state.eventList.loading);
 
@@ -30,7 +34,11 @@ function EventDashBoard() {
   }, []);
 
   const handleSearch = (value) => {
-    dispatch(actGetEventList(value));
+    setSearch(value);
+    const filterRequest = {
+      search: value
+    };
+    dispatch(actGetEventList(filterRequest));
   };
 
   return (

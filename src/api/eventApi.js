@@ -7,17 +7,10 @@ const eventApi = {
     const url = resourceName + "/LayDanhSachBanner";
     return axiosClient.get(url);
   },
-  getEventList: (params, eventName) => {
+  getEventList: (eventFilter) => {
     let url;
-    url = resourceName + "/event-list";
-    return axiosClient.get(url);
-    // if (eventName !== "") {
-    //   url = resourceName + `LayDanhSachPhim?maNhom=${params.maNhom}&tenPhim=${eventName}`;
-    //   return axiosClient.get(url);
-    // } else {
-    //   url = resourceName + "LayDanhSachPhim";
-    //   return axiosClient.get(url, { params });
-    // }
+    url = resourceName + "/filter";
+    return axiosClient.get(url, eventFilter);
   },
   getPaginatedEventList: (params) => {
     const url = resourceName + "/LayDanhSachPhimPhanTrang";
@@ -32,7 +25,7 @@ const eventApi = {
     return axiosClient.get(url);
   },
   deleteEvent: (params) => {
-    const url = resourceName + `/XoaPhim?MaPhim=${params}`;
+    const url = resourceName + `/${params}`;
     return axiosClient.delete(url);
   },
   addEvent: (formData) => {
