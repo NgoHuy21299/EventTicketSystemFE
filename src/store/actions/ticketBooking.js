@@ -51,7 +51,7 @@ const actBookTicket = (ticket) => {
           const OrderType = "other"
           const BankCode = ""
           const paymentResponse = await ticketBookingApi.createPayment(BookingId, Amount, Locale, BankCode, OrderType);
-          window.location.href = paymentResponse.PaymentUrl;
+          window.location.href = paymentResponse.paymentUrl
         } else {
           dispatch(actBookTicketFail("Đặt vé thất bại!"));
         }
