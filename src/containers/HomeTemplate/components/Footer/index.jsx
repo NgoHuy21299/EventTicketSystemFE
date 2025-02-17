@@ -14,10 +14,6 @@ import {
 // Material UI
 import { Grid } from "@mui/material";
 
-// Components
-import Image from "@/components/Image";
-import images from "@/assets/images";
-
 import "./style.scss";
 
 function Footer() {

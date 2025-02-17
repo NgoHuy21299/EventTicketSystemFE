@@ -1,7 +1,6 @@
 import * as yup from "yup";
 
 import msg from "./message";
-import pattern from "./pattern";
 
 const editEventSchema = yup.object({
   name: yup.string().required(msg.required),

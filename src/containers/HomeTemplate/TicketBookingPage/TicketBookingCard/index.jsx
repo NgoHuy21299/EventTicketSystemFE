@@ -3,7 +3,6 @@ import "./style.scss";
 
 // Material UI
 import {
-  Box,
   Card,
   CardActions,
   CardContent,
@@ -12,7 +11,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  Stack,
   Typography,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";

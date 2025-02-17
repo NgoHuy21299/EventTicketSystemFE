@@ -1,6 +1,5 @@
 import * as actType from "../constants/eventList";
 
-import { GROUP_ID } from "@/constants";
 import { eventApi } from "@/api";
 
 const actGetEventList = (eventFilter) => {
@@ -9,6 +8,11 @@ const actGetEventList = (eventFilter) => {
 
     const fetchEventList = async () => {
       try {
+        const eventFilter = {
+          search: "",
+          status: "",
+          category: "",
+        };
         const eventList = await eventApi.getEventList(eventFilter);
         dispatch(actGetEventListSuccess(eventList));
       } catch (error) {
