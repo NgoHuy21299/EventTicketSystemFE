@@ -28,33 +28,37 @@ import { userApi } from "@/api";
 // Scss
 import "./style.scss";
 
-const LoginPage = () => {
+const ForgotPasswordPage = () => {
   const auth = useAuth();
   // const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const { control, handleSubmit } = useForm({
     reValidateMode: "onSubmit",
     defaultValues: { username: "", password: "" },
-    // resolver: yupResolver(loginSchema),
   });
-
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
 
   const handleLogin = (user) => {
     (async () => {
       try {
         setLoading(true);
 
-        user = { email: user.username, password: user.password };
-        user = await userApi.login(user);
-        auth.login(user);
-        // dispatch(actUpdateRoleBase(user.maLoaiNguoiDung));
-        navigate(-1);
+        const email = { email: user.email };
+        const response = await userApi.forgotPassword(email);
+        
+        // Check response status
+        if (!response.isSuccess) {
+          // Handle error case - show error message from API
+          setError(response.message); // Store error message from API
+        } else {
+          // Handle success case - navigate to home
+          navigate("/");
+        }
+
       } catch (error) {
-        setError(true);
+        // Handle unexpected errors
+        setError("Có lỗi xảy ra, vui lòng thử lại sau");
       } finally {
         setLoading(false);
       }
@@ -71,44 +75,23 @@ const LoginPage = () => {
     >
       {error && (
         <Alert severity="error" sx={{ mb: 2 }}>
-          Đăng nhập không thành công
+          {error}
         </Alert>
       )}
-      <Input name="username" control={control} label="Tài khoản" />
-      <Input
-        name="password"
-        control={control}
-        label="Mật khẩu"
-        type={showPassword ? "password" : "text"}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword}>
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-        sx={{ mb: 2 }}
-      />
-      <FormControlLabel
-        control={<Checkbox value="remember" color="primary" />}
-        label="Ghi nhớ đăng nhập"
-        className="remember-login"
-      />
+      <Input name="email" control={control} label="Email" />
       <Button onClick={() => setError(false)} loading={loading}>
-        Đăng nhập
+        Gửi email lấy lại mật khẩu
       </Button>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <RouterLink to="/auth/forgot-password" variant="body2" className="auth-link-to-register">
-          Quên mật khẩu?
-        </RouterLink>
         <Typography className="auth-link-to-register">
           Không có tài khoản? <RouterLink to="/auth/register">Đăng ký</RouterLink>
+        </Typography>
+        <Typography className="auth-link-to-register">
+          Đã có tài khoản? <RouterLink to="/auth/login">Đăng nhập</RouterLink>
         </Typography>
       </Stack>
     </Box>
   );
 };
 
-export default LoginPage;
+export default ForgotPasswordPage;

@@ -65,7 +65,7 @@ const userProfileReducer = (state = initialState, { type, payload }) => {
           error: "",
         },
         update: { loading: false, error: "" },
-        modal: { ...state.modal, open: true },
+        modal: { ...state.modal, open: true, children: [payload?.message] },
       };
 
     // Close modal

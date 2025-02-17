@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 const AuthPage = lazy(() => import("@/containers/AuthTemplate"));
 const LoginPage = lazy(() => import("@/containers/AuthTemplate/LoginPage"));
 const RegisterPage = lazy(() => import("@/containers/AuthTemplate/RegisterPage"));
+const ForgotPasswordPage = lazy(() => import("@/containers/AuthTemplate/ForgotPasswordPage"));
 
 const AuthRoutes = {
   path: "auth",
@@ -13,6 +14,7 @@ const AuthRoutes = {
     { path: "", element: <Navigate to="login" /> },
     { path: "login", element: <LoginPage /> },
     { path: "register", element: <RegisterPage /> },
+    { path: "forgot-password", element: <ForgotPasswordPage /> },
   ],
 };
 
