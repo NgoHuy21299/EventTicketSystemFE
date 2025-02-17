@@ -11,6 +11,10 @@ const userApi = {
     const url = resourceName + "register";
     return axiosClient.post(url, user);
   },
+  forgotPassword: (email) => {
+    const url = resourceName + "forgot-password";
+    return axiosClient.post(url, email);
+  },
   getUser: (request) => {
     const url = resourceName + "profile";
     return axiosClient.get(url);
