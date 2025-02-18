@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { ROLE } from "@/constants";
 
 //FontAwesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,7 +20,6 @@ import {
   Button,
   Tooltip,
   MenuItem,
-  Select,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
@@ -29,37 +29,11 @@ import images from "@/assets/images";
 
 import "./style.scss";
 
-const settings = [
-  {
-    label: "Hồ sơ cá nhân",
-    to: "/profile",
-  },
-  {
-    label: "Thẻ thành viên",
-    to: "/",
-  },
-  {
-    label: "Đăng xuất",
-    to: "/",
-  },
-];
-
-const languages = {
-  vi: { nativeName: "VN" },
-  en: { nativeName: "EN" },
-};
-
 const Navbar = () => {
-  const { i18n, t } = useTranslation();
+  const { t } = useTranslation();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [language, setLanguage] = React.useState(i18n.resolvedLanguage);
   const navigate = useNavigate();
-
-  const handleChangeLanguage = (event) => {
-    i18n.changeLanguage(event.target.value);
-    setLanguage(event.target.value);
-  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -84,6 +58,25 @@ const Navbar = () => {
 
   //Check if user is signed in
   const user = localStorage.getItem("user");
+  let isAdmin = false;
+  let userRoles = {};
+
+  if (user) {
+    userRoles = JSON.parse(user)?.roles;
+    isAdmin = userRoles.some((role) => [ROLE.ADMIN].includes(role));
+  }
+
+  const settings = isAdmin
+    ? [
+        { label: "Hồ sơ cá nhân", to: "/profile" },
+        { label: "Quản lý", to: "/admin" },
+        { label: "Đăng xuất", to: "/" },
+      ]
+    : [
+        { label: "Hồ sơ cá nhân", to: "/profile" },
+        { label: "Đăng xuất", to: "/" },
+      ];
+
   const renderProfile = () => {
     return (
       <Box sx={{ flexGrow: 0 }}>
@@ -176,20 +169,6 @@ const Navbar = () => {
                   </Typography>
                 </Link>
               </MenuItem>
-              <MenuItem onClick={handleCloseNavMenu} className="main-header__navbar-item">
-                <Link to="/tin-tuc">
-                  <Typography className="main-header__navbar-item-name" textAlign="center">
-                    Tin tức
-                  </Typography>
-                </Link>
-              </MenuItem>
-              <MenuItem onClick={handleCloseNavMenu} className="main-header__navbar-item">
-                <Link to="/lien-he">
-                  <Typography className="main-header__navbar-item-name" textAlign="center">
-                    Liên hệ
-                  </Typography>
-                </Link>
-              </MenuItem>
             </Menu>
           </Box>
           <Typography
@@ -223,24 +202,6 @@ const Navbar = () => {
                 Trang chủ
               </Button>
             </Link>
-            <Link to="/tin-tuc">
-              <Button
-                className="main-header__navbar-item"
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                Tin tức
-              </Button>
-            </Link>
-            <Link to="/lien-he">
-              <Button
-                className="main-header__navbar-item"
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                Liên hệ
-              </Button>
-            </Link>
           </Box>
 
           {/* Render action buttons if not sign in */}
@@ -262,14 +223,6 @@ const Navbar = () => {
               </Link>
             </>
           )}
-
-          <Select className="language-switcher" value={language} onChange={handleChangeLanguage}>
-            {Object.keys(languages).map((language) => (
-              <MenuItem className="language-item" key={language} value={language}>
-                {languages[language].nativeName}
-              </MenuItem>
-            ))}
-          </Select>
         </Toolbar>
       </Container>
     </AppBar>

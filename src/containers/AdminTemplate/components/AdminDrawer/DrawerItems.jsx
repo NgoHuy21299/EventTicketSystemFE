@@ -1,4 +1,4 @@
-import { CalendarMonth, LocalMovies, PeopleAlt } from "@mui/icons-material";
+import { LocalMovies, PeopleAlt } from "@mui/icons-material";
 // Material UI
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";

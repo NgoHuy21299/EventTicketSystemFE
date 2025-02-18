@@ -67,11 +67,11 @@ function MultipleItems({
 }) {
   const settings = {
     dots: dots,
-    infinite: true,
+    infinite: data?.length > slidesToShow,
     autoplay: autoplay,
     speed: speed,
-    autoplaySpeed: autoplaySpeed - 1,
-    slidesToShow: slidesToShow - 1,
+    autoplaySpeed: autoplaySpeed,
+    slidesToShow: slidesToShow,
     slidesToScroll: slidesToShow,
     nextArrow: <SampleNextArrow icon={nextArrow} />,
     prevArrow: <SamplePrevArrow icon={prevArrow} />,
@@ -79,16 +79,16 @@ function MultipleItems({
       {
         breakpoint: 1000,
         settings: {
-          slidesToShow: 3.5,
-          slidesToScroll: 3,
-          infinite: true,
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          infinite: data?.length > 2,
           dots: true,
         },
       },
       {
         breakpoint: 739,
         settings: {
-          slidesToShow: 1.5,
+          slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 1,
         },
@@ -97,8 +97,6 @@ function MultipleItems({
   };
 
   const renderCarouselContent = () => {
-    console.log(data);
-
     return data?.map((item) => {
       switch (Component) {
         case "img":

@@ -31,9 +31,6 @@ import { registerSchema } from "@/validators";
 // Api
 import { userApi } from "@/api";
 
-// Constants
-import { GROUP_ID } from "@/constants";
-
 // Scss
 import "./style.scss";
 

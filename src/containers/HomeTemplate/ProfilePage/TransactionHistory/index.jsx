@@ -17,10 +17,8 @@ import {
 import { FirstPage, KeyboardArrowLeft, KeyboardArrowRight, LastPage } from "@mui/icons-material";
 
 // Constants
-import { ALPHABET } from "@/constants";
 import PropTypes from "prop-types";
 // Format date
-import moment from "moment";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 // Material UI
@@ -122,16 +120,8 @@ const TransactionHistory = () => {
       : rows
     )?.map((row) => {
       let seats = row?.tickets;
-      const { tenCumRap, tenHeThongRap } = seats[0];
 
       seats = seats.map((seat, idx) => {
-        console.log(seat);
-        // Number of seat rows in ticket booking page
-        // const nRow = 16;
-        // const seatIndicator = ALPHABET[Math.floor((+seat.tenGhe - 1) / nRow)];
-        // const seatIdx = ((+seat.tenGhe - 1) % nRow) + 1;
-        // const seatCode = seatIndicator + seatIdx;
-
         const seatCode = seat.row + seat.number;
 
         const isLastSeat = idx === seats.length - 1;
@@ -148,8 +138,7 @@ const TransactionHistory = () => {
         <TableRow key={row.bookedAt}>
           <TableCell align="center">{row?.bookingId}</TableCell>
           <TableCell align="center">{row?.eventName}</TableCell>
-          <TableCell align="center">{row?.eventDate}
-          </TableCell>
+          <TableCell align="center">{row?.eventDate}</TableCell>
           <TableCell align="center">{row.venue}</TableCell>
           {/* <TableCell align="center">
             {tenHeThongRap}, {tenCumRap}
