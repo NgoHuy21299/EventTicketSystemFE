@@ -13,6 +13,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { DEFAULT_CATEGORY, GROUP_ID } from "@/constants";
 // formik
 import { Formik, useFormik } from "formik";
 import { actFetchEventAdd, actFetchEventEdit } from "@/store/actions/eventManagement";
@@ -20,8 +21,8 @@ import { addEventSchema, editEventSchema } from "@/validators";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-import { GROUP_ID } from "@/constants";
 import Image from "@/components/Image";
+import InputAdornment from '@mui/material/InputAdornment';
 // Components
 import Loader from "@/components/Loader";
 import MuiDatePicker from "@/components/MuiPicker";
@@ -69,6 +70,7 @@ function EventModal(props) {
     imageUrls: "",
     totalTickets: 0,
     remainingTickets: 0,
+    seatPrice: 0
   };
 
   const initialValuesEditEvent = {
@@ -79,11 +81,13 @@ function EventModal(props) {
     endDate: data?.endDate,
     venueName: data?.venueName,
     venueAddress: data?.venueAddress,
-    category: data?.category,
+    category: DEFAULT_CATEGORY.MUSIC,
+    // data?.category
     artistInfo: data?.artistInfo,
-    imageUrls: null,
+    imageUrls: data?.imageUrls,
     totalTickets: data?.totalTickets,
     remainingTickets: data?.remainingTickets,
+    seatPrice: data?.seatPrice
   };
 
   let eventSchema = modalType === "addEvent" ? addEventSchema : editEventSchema;
@@ -98,9 +102,9 @@ function EventModal(props) {
     }
   };
 
-  const fetchEventEdit = async (formData) => {
+  const fetchEventEdit = async (eventID, formData) => {
     try {
-      await eventApi.editEvent(formData);
+      await eventApi.editEvent(eventID, formData);
       setOpenModalEvent(false);
       document.location.reload();
     } catch (error) {
@@ -129,7 +133,7 @@ function EventModal(props) {
           fetchEventAdd(formData);
         } else if (modalType === "editEvent") {
           values.id = eventId;
-          fetchEventEdit(formData);
+          fetchEventEdit(eventId, formData);
         }
       },
     });
@@ -319,6 +323,9 @@ function EventModal(props) {
                   onBlur={handleBlur}
                   value={values.seatPrice}
                   error={errors.seatPrice && touched.seatPrice ? true : false}
+                  InputProps={{
+                    endAdornment: <InputAdornment position="end">₫</InputAdornment>,
+                  }}
                 />
                 {errors.seatPrice && touched.seatPrice && (
                   <FormHelperText error>{errors.seatPrice}</FormHelperText>

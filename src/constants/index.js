@@ -6,3 +6,8 @@ export const ROLE = {
 };
 
 export const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+export const DEFAULT_CATEGORY = {
+  MUSIC: 1,
+  CONFERENCE: 2
+}
