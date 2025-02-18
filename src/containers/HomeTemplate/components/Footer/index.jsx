@@ -29,64 +29,58 @@ function Footer() {
         <Grid container className="footer__list">
           <Grid item xs={12} md={3} className="footer__list-item">
             <p className="footer__list-title">Finnkino</p>
-            <a className="footer__list-link" href="https://www.finnkino.fi/en/teatterit">
-              Rạp phim
+            <a className="footer__list-link" href="/">
+              Sự kiện
             </a>
-            <a className="footer__list-link" href="http://www.finnkinob2b.fi/">
+            <a className="footer__list-link" href="/">
               B2B
             </a>
-            <a className="footer__list-link" href="https://www.finnkino.fi/en/rekry">
+            <a className="footer__list-link" href="/">
               Việc làm
             </a>
-            <a className="footer__list-link" href="https://www.finnkino.fi/en/tietoa-finnkinosta">
+            <a className="footer__list-link" href="/">
               Finnkino Oy
             </a>
           </Grid>
           <Grid item xs={12} md={3} className="footer__list-item">
             <p className="footer__list-title">Chăm sóc khách hàng</p>
-            <a className="footer__list-link" href="https://www.finnkino.fi/en/asiakaspalvelu/">
+            <a className="footer__list-link" href="/">
               Liên hệ
             </a>
-            <a className="footer__list-link" href="https://www.finnkino.fi/en/faq">
+            <a className="footer__list-link" href="/">
               Câu hỏi thường gặp
             </a>
           </Grid>
           <Grid item xs={12} md={3} className="footer__list-item">
             <p className="footer__list-title">Web shop</p>
-            <a className="footer__list-link" href="https://www.finnkino.fi/en/tietosuoja">
+            <a className="footer__list-link" href="/">
               Chính sách bảo mật
             </a>
-            <a
-              className="footer__list-link"
-              href="https://www.finnkino.fi/en/verkkokauppa/verkkokaupan-kayttoehdot"
-            >
+            <a className="footer__list-link" href="/">
               Điều khoản sử dụng
             </a>
-            <a
-              className="footer__list-link"
-              href="https://www.finnkino.fi/en/verkkokauppa/finnkino-lab-ehdot"
-            >
+            <a className="footer__list-link" href="/">
               Các điều khoản của Finnkino Lab
             </a>
           </Grid>
           <Grid item xs={12} lg={3} md={12} className="footer__list-item  list--social">
             <p className="footer__list-title">Mạng xã hội</p>
-            <a className="footer__list-link" href="https://www.instagram.com/finnkino_fi">
+            <a className="footer__list-link" href="/">
               <FontAwesomeIcon icon={faTwitter} />
             </a>
-            <a className="footer__list-link" href="https://www.instagram.com/finnkino_fi">
+            <a className="footer__list-link" href="/">
               <FontAwesomeIcon icon={faInstagram} />
             </a>
-            <a className="footer__list-link" href="https://www.facebook.com/finnkino">
+            <a className="footer__list-link" href="/">
               <FontAwesomeIcon icon={faFacebook} />
             </a>
-            <a className="footer__list-link" href="https://www.snapchat.com/add/finnkino">
+            <a className="footer__list-link" href="/">
               <FontAwesomeIcon icon={faSnapchat} />
             </a>
-            <a className="footer__list-link" href="https://www.linkedin.com/company/48910/">
+            <a className="footer__list-link" href="/">
               <FontAwesomeIcon icon={faLinkedin} />
             </a>
-            <a className="footer__list-link" href="https://www.youtube.com/finnkinosuomi">
+            <a className="footer__list-link" href="/">
               <FontAwesomeIcon icon={faYoutube} />
             </a>
           </Grid>

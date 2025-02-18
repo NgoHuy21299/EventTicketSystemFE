@@ -8,11 +8,6 @@ const actGetEventList = (eventFilter) => {
 
     const fetchEventList = async () => {
       try {
-        const eventFilter = {
-          search: "",
-          status: "",
-          category: "",
-        };
         const eventList = await eventApi.getEventList(eventFilter);
         dispatch(actGetEventListSuccess(eventList));
       } catch (error) {

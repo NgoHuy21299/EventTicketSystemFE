@@ -29,9 +29,6 @@ import { accountInfoSchema } from "@/validators";
 // Redux actions
 import { actUpdateUserProfile, actCloseModal } from "@/store/actions/userProfile";
 
-// Constant
-import { GROUP_ID } from "@/constants";
-
 // Scss
 import "./style.scss";
 
@@ -42,7 +39,7 @@ const AccountInfo = () => {
     newPassword: false,
     confirmedNewPassword: false,
   });
-  const [showModal, setShowModal] = useState(false);
+  const [setShowModal] = useState(false);
   const [allowChangePassword, setAllowChangePassword] = useState(false);
   const { content: user, loading } = useSelector((rootReducer) => rootReducer.userProfile.data);
   const { loading: updateLoading } = useSelector((rootReducer) => rootReducer.userProfile.update);
@@ -61,7 +58,7 @@ const AccountInfo = () => {
       confirmedNewPassword: "",
     },
     resolver: yupResolver(accountInfoSchema),
-    context: { allowChangePassword }
+    context: { allowChangePassword },
   });
 
   useEffect(() => {
@@ -131,8 +128,7 @@ const AccountInfo = () => {
             }}
           />
         </Grid>
-        <Grid item xs={12} sm={4}>
-        </Grid>
+        <Grid item xs={12} sm={4}></Grid>
       </Grid>
       <Grid container spacing={{ xs: 0, sm: 4 }}>
         <Grid item xs={12} sm={4}>
@@ -158,8 +154,7 @@ const AccountInfo = () => {
                 name="currentPassword"
                 control={control}
                 placeholder="Mật khẩu hiện tại"
-                InputProps={{
-                }}
+                InputProps={{}}
               />
             </Grid>
           </Grid>

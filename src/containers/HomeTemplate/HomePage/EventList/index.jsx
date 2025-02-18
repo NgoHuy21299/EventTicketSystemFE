@@ -17,7 +17,10 @@ import { useEffect } from "react";
 
 function EventList() {
   useEffect(() => {
-    dispatch(actGetEventList());
+    const filterRequest = {
+      search: "",
+    };
+    dispatch(actGetEventList(filterRequest));
   }, []);
 
   const dispatch = useDispatch();
