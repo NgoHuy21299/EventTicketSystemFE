@@ -42,11 +42,20 @@ const actBookTicket = (ticket) => {
 
     (async () => {
       try {
-        await ticketBookingApi.bookTicket(ticket);
-
-        dispatch(actBookTicketSuccess());
+        const bookingResponse = await ticketBookingApi.bookTicket(ticket);
+  
+        if (bookingResponse.success) {
+          const BookingId = bookingResponse.bookingId;
+          const Amount = bookingResponse.totalAmount;
+          const Locale = "vn"
+          const OrderType = "other"
+          const BankCode = ""
+          const paymentResponse = await ticketBookingApi.createPayment(BookingId, Amount, Locale, BankCode, OrderType);
+          window.location.href = paymentResponse.paymentUrl
+        } else {
+          dispatch(actBookTicketFail("Đặt vé thất bại!"));
+        }
       } catch (error) {
-        console.log("booking fail", error);
         dispatch(actBookTicketFail(error));
       }
     })();
