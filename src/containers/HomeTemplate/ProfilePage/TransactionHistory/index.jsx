@@ -1,6 +1,4 @@
-// Scss
-import "./style.scss";
-
+import React, { useState } from "react";
 import {
   Box,
   IconButton,
@@ -13,16 +11,15 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  Modal,
+  Typography,
+  Button,
 } from "@mui/material";
 import { FirstPage, KeyboardArrowLeft, KeyboardArrowRight, LastPage } from "@mui/icons-material";
-
-// Constants
 import PropTypes from "prop-types";
-// Format date
 import { useSelector } from "react-redux";
-import { useState } from "react";
-// Material UI
 import { useTheme } from "@mui/material/styles";
+import "./style.scss";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -98,12 +95,20 @@ const columns = [
     align: "center",
     minWidth: 195,
   },
+  {
+    id: "payment-status",
+    label: "Trạng thái thanh toán",
+    align: "center",
+    minWidth: 195,
+  },
 ];
 
 const TransactionHistory = () => {
   const { content } = useSelector((rootReducer) => rootReducer.userProfile.data);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [open, setOpen] = useState(false);
+  const [selectedTicket, setSelectedTicket] = useState(null);
 
   const rows = content?.bookings;
 
@@ -112,6 +117,16 @@ const TransactionHistory = () => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const handleTicketClick = (ticket) => {
+    setSelectedTicket(ticket);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedTicket(null);
   };
 
   const renderTableBody = () =>
@@ -134,61 +149,89 @@ const TransactionHistory = () => {
         );
       });
 
+      let status = row?.status;
+      if (status === "Pending payment") {
+        status = "Đang chờ thanh toán";
+      } else if (status === "Paid") {
+        status = "Đã thanh toán";
+      } else {
+        status = "Đã hủy";
+      }
+
       return (
         <TableRow key={row.bookedAt}>
-          <TableCell align="center">{row?.bookingId}</TableCell>
+          <TableCell align="center">
+            <span onClick={() => handleTicketClick(row?.tickets)} style={{ cursor: "pointer", color: "blue" }}>
+              {row?.bookingId}
+            </span>
+          </TableCell>
           <TableCell align="center">{row?.eventName}</TableCell>
           <TableCell align="center">{row?.eventDate}</TableCell>
-          <TableCell align="center">{row.venue}</TableCell>
-          {/* <TableCell align="center">
-            {tenHeThongRap}, {tenCumRap}
-          </TableCell> */}
-          <TableCell align="center">{row.totalAmount.toLocaleString()} VNĐ</TableCell>
+          <TableCell align="center">{row?.venue}</TableCell>
+          <TableCell align="center">{row?.totalAmount?.toLocaleString()} VNĐ</TableCell>
           <TableCell align="center">{seats}</TableCell>
+          <TableCell align="center">{status}</TableCell>
         </TableRow>
       );
     });
 
   return (
-    <TableContainer component={Paper} className="transaction-history">
-      <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-        <TableHead>
-          <TableRow>
-            {columns.map((column) => (
-              <TableCell
-                className="transaction-history__table-head-cell"
-                key={column.id}
-                align={column.align}
-                style={{ minWidth: column.minWidth }}
-              >
-                {column.label}
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>{renderTableBody()}</TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-              colSpan={3}
-              count={rows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  "aria-label": "rows per page",
-                },
-                native: true,
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+    <>
+      <TableContainer component={Paper} className="transaction-history">
+        <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+          <TableHead>
+            <TableRow>
+              {columns.map((column) => (
+                <TableCell
+                  className="transaction-history__table-head-cell"
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>{renderTableBody()}</TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+                colSpan={3}
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: {
+                    "aria-label": "rows per page",
+                  },
+                  native: true,
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+      <Modal open={open} onClose={handleClose}>
+        <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 }}>
+          <Typography variant="h6" component="h2" align="center">
+            Mã vé của bạn
+          </Typography>
+          {selectedTicket?.map((ticket, idx) => (
+            <Typography key={idx} sx={{ mt: 2 }}>
+              {ticket.row}{ticket.number}: {ticket.ticketNumber}
+            </Typography>
+          ))}
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+            <Button variant="contained" onClick={handleClose}>Đóng</Button>
+          </Box>
+        </Box>
+      </Modal>
+    </>
   );
 };
 
