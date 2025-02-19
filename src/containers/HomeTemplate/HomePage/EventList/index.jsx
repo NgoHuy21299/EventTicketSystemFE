@@ -61,7 +61,7 @@ function EventList() {
     }
     
     const filterRequest = {
-      search: "",
+      isUpcoming: true,
     };
     dispatch(actGetEventList(filterRequest));
   }, []);
