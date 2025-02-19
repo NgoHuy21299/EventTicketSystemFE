@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 import Image from "@/components/Image";
-import InputAdornment from '@mui/material/InputAdornment';
+import InputAdornment from "@mui/material/InputAdornment";
 // Components
 import Loader from "@/components/Loader";
 import MuiDatePicker from "@/components/MuiPicker";
@@ -56,7 +56,7 @@ function EventModal(props) {
   const handleClose = () => {
     setOpenModalEvent(false);
     resetForm();
-  } 
+  };
 
   const initialValuesAddEvent = {
     name: "",
@@ -70,7 +70,8 @@ function EventModal(props) {
     imageUrls: "",
     totalTickets: 0,
     remainingTickets: 0,
-    seatPrice: 0
+    seatPrice: null,
+    trailerUrls: "",
   };
 
   const initialValuesEditEvent = {
@@ -87,7 +88,8 @@ function EventModal(props) {
     imageUrls: data?.imageUrls,
     totalTickets: data?.totalTickets,
     remainingTickets: data?.remainingTickets,
-    seatPrice: data?.seatPrice
+    seatPrice: data?.seatPrice,
+    trailerUrls: data?.trailerUrls,
   };
 
   let eventSchema = modalType === "addEvent" ? addEventSchema : editEventSchema;
@@ -112,37 +114,60 @@ function EventModal(props) {
     }
   };
 
-  const { errors, values, touched, setFieldValue, handleSubmit, handleChange, handleBlur, resetForm } =
-    useFormik({
-      enableReinitialize: true,
-      initialValues: modalType === "addEvent" ? initialValuesAddEvent : initialValuesEditEvent,
-      validationSchema: eventSchema,
-      onSubmit: (values) => {
-        let formData = new FormData();
-        for (var key in values) {
-          if (key !== "imageUrls") {
-            formData.append(key, values[key]);
-          } else {
-            if (values.imageUrls !== null && values.imageUrls !== "") {
-              formData.append("image", values.imageUrls);
-            }
+
+  const {
+    errors,
+    values,
+    touched,
+    setFieldValue,
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    resetForm,
+  } = useFormik({
+    enableReinitialize: true,
+    initialValues: modalType === "addEvent" ? initialValuesAddEvent : initialValuesEditEvent,
+    validationSchema: eventSchema,
+    onSubmit: (values) => {
+      let formData = new FormData();
+      for (var key in values) {
+        if (key !== "imageUrls") {
+          formData.append(key, values[key]);
+        } else {
+          if (values.imageUrls !== null && values.imageUrls !== "") {
+            formData.append("image", values.imageUrls);
           }
         }
+      }
 
-        if (modalType === "addEvent") {
-          fetchEventAdd(formData);
-        } else if (modalType === "editEvent") {
-          values.id = eventId;
-          fetchEventEdit(eventId, formData);
-        }
-      },
-    });
+      if (modalType === "addEvent") {
+        fetchEventAdd(formData);
+      } else if (modalType === "editEvent") {
+        values.id = eventId;
+        fetchEventEdit(eventId, formData);
+      }
+    },
+  });
 
-  useEffect(() => {
-    if (eventId) {
-      dispatch(actFetchEventDetails(eventId));
-    }
-  }, [eventId]);
+  // useEffect(() => {
+  //   if (eventId) {
+  //     const formattedValue = new Intl.NumberFormat().format(data?.seatPrice);
+      
+  //     setFieldValue("seatPrice", formattedValue);
+  //   }
+  // }, data);
+
+  const handleChangeNumberbox = (e) => {
+    // Remove non-numeric characters (except for the decimal point)
+    const rawValue = e.target.value.replace(/[^\d.-]/g, '');
+    
+    // Format the number with thousands separators
+    const formattedValue = rawValue
+      ? new Intl.NumberFormat().format(rawValue)
+      : '';
+      
+      setFieldValue("seatPrice", formattedValue);
+  };
 
   const handleChangeDatePicker = (date) => {
     let startDate = moment(date).toISOString();
@@ -260,12 +285,12 @@ function EventModal(props) {
                     onBlur={handleBlur}
                     value={values.startDate || null}
                   />
-                  {errors.startDate && touched.startDate && (
-                    <FormHelperText error>{errors.startDate}</FormHelperText>
-                  )}
                 </Box>
+                {errors.startDate && touched.startDate && (
+                  <FormHelperText error>{errors.startDate}</FormHelperText>
+                )}
               </FormControl>
-              
+
               <FormControl className="form__input-wrapper">
                 <Box sx={{ flexDirection: "row", display: "flex", alignItems: "center" }}>
                   <FormLabel
@@ -284,10 +309,10 @@ function EventModal(props) {
                     onBlur={handleBlur}
                     value={values.endDate || null}
                   />
-                  {errors.endDate && touched.endDate && (
-                    <FormHelperText error>{errors.endDate}</FormHelperText>
-                  )}
                 </Box>
+                {errors.endDate && touched.endDate && (
+                  <FormHelperText error>{errors.endDate}</FormHelperText>
+                )}
               </FormControl>
 
               <FormControl fullWidth className="form__input-wrapper">
@@ -310,16 +335,35 @@ function EventModal(props) {
               </FormControl>
 
               <FormControl fullWidth className="form__input-wrapper">
+                <FormLabel className="event-form__input-label" htmlFor="trailer-urls">
+                  Trailer URL
+                </FormLabel>
+                <TextField
+                  name="trailerUrls"
+                  id="trailer-urls"
+                  variant="outlined"
+                  fullWidth
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.trailerUrls}
+                  error={errors.trailerUrls && touched.trailerUrls ? true : false}
+                />
+                {errors.trailerUrls && touched.trailerUrls && (
+                  <FormHelperText error>{errors.trailerUrls}</FormHelperText>
+                )}
+              </FormControl>
+
+              <FormControl fullWidth className="form__input-wrapper">
                 <FormLabel className="event-form__input-label" htmlFor="seat-price">
                   Giá vé
                 </FormLabel>
                 <TextField
                   name="seatPrice"
                   id="seat-price"
-                  type="number"
+                  type="text"
                   variant="outlined"
                   fullWidth
-                  onChange={handleChange}
+                  onChange={handleChangeNumberbox}
                   onBlur={handleBlur}
                   value={values.seatPrice}
                   error={errors.seatPrice && touched.seatPrice ? true : false}
@@ -358,11 +402,9 @@ function EventModal(props) {
                 />
               </FormControl>
 
-
               <Box sx={{ mt: 2 }}>
                 <SubmitButton>{button}</SubmitButton>
               </Box>
-
             </Box>
           </Formik>
         )}
