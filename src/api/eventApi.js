@@ -10,7 +10,7 @@ const eventApi = {
   getEventList: (eventFilter) => {
     let url;
     url = resourceName + "/filter";
-    return axiosClient.get(url, eventFilter);
+    return axiosClient.get(url, { params: eventFilter });
   },
   getPaginatedEventList: (params) => {
     const url = resourceName + "/LayDanhSachPhimPhanTrang";
