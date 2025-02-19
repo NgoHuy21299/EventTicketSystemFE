@@ -100,6 +100,38 @@ const ticketBookingReducer = (state = initialState, { type, payload }) => {
         },
       };
 
+    case actType.PAYMENT_TICKET_SUCCESS:
+      return {
+        ...state,
+        bookTicket: {
+          loading: false,
+          error: "",
+        },
+        modal: {
+          ...state.modal,
+          open: true,
+          title: "Thông báo",
+          children: ["Thanh toán thành công!", "Chúc bạn có cuộc chơi vui vẻ"],
+          path: "/",
+        },
+      };
+
+    case actType.PAYMENT_TICKET_FAILED:
+      return {
+        ...state,
+        bookTicket: {
+          loading: false,
+          error: "",
+        },
+        modal: {
+          ...state.modal,
+          open: true,
+          title: "Thông báo",
+          children: ["Thanh toán không thành công!", "Vui lòng kiểm tra lại giao dịch"],
+          path: "/",
+        },
+      };
+
     // Choose seat
     case actType.CHOOSE_SEAT:
       const selectedSeats = [...state.selectedSeats];
