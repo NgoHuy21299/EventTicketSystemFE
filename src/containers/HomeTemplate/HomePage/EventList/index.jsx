@@ -59,7 +59,7 @@ function EventList() {
 
       setSearchParams(searchParams);
     }
-
+    
     const filterRequest = {
       search: "",
     };
