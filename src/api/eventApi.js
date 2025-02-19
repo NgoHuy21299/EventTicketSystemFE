@@ -7,11 +7,6 @@ const eventApi = {
     const url = resourceName + "/LayDanhSachBanner";
     return axiosClient.get(url);
   },
-  getEventList: (eventFilter) => {
-    let url;
-    url = resourceName + "/filter";
-    return axiosClient.get(url, { params: eventFilter });
-  },
   getPaginatedEventList: (params) => {
     const url = resourceName + "/LayDanhSachPhimPhanTrang";
     return axiosClient.get(url, { params });
@@ -19,6 +14,11 @@ const eventApi = {
   getEventListByDate: (params) => {
     const url = resourceName + "/LayDanhSachPhimTheoNgay";
     return axiosClient.get(url, { params });
+  },
+  getEventList: (eventFilter) => {
+    let url;
+    url = resourceName + "/filter";
+    return axiosClient.get(url, {params: eventFilter});
   },
   getEventDetails: (params) => {
     const url = resourceName + `/event-detail/${params}`;
@@ -32,9 +32,9 @@ const eventApi = {
     const url = resourceName;
     return axiosClient.post(url, formData);
   },
-  editEvent: (formData) => {
-    const url = resourceName + "/CapNhatPhimUpload";
-    return axiosClient.post(url, formData);
+  editEvent: (eventID, formData) => {
+    const url = resourceName + `/${eventID}`;
+    return axiosClient.put(url, formData);
   },
 };
 
