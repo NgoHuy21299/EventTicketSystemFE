@@ -25,6 +25,15 @@ const ticketBookingApi = {
       OrderType
     });
   },
+  paymentReturn: () => {
+    const queryParams = window.location.search;
+    const url = `user/vnpay-return`;
+    return axiosClient.get(url);
+  },
+  processPayment: (vnpayReturn) => {
+    const url = "user/process-payment";
+    return axiosClient.post(url, vnpayReturn);
+  },
 };
 
 export default ticketBookingApi;

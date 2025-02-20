@@ -10,6 +10,8 @@ const HomePage = lazy(() => import("@/containers/HomeTemplate/HomePage"));
 const EventDetailPage = lazy(() => import("@/containers/HomeTemplate/EventDetailsPage"));
 const TicketBookingPage = lazy(() => import("@/containers/HomeTemplate/TicketBookingPage"));
 const ProfilePage = lazy(() => import("@/containers/HomeTemplate/ProfilePage"));
+const PaymentReturnPage = lazy(() => import("@/containers/HomeTemplate/PaymentReturnPage"));
+
 
 const ClientRoutes = {
   path: "/",
@@ -33,6 +35,14 @@ const ClientRoutes = {
       element: (
         <RequireAuth roles={[ROLE.ADMIN, ROLE.CLIENT]}>
           <ProfilePage />
+        </RequireAuth>
+      ),
+    },
+    {
+      path: "payment-return",
+      element: (
+        <RequireAuth roles={[ROLE.ADMIN, ROLE.CLIENT]}>
+          <PaymentReturnPage />
         </RequireAuth>
       ),
     },

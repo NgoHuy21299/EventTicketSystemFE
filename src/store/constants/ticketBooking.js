@@ -12,6 +12,7 @@ export const BOOK_TICKET_SUCCESS = "@ticketBookingReducer/BOOK_TICKET_SUCCESS";
 export const BOOK_TICKET_FAIL = "@ticketBookingReducer/BOOK_TICKETS__FAIL";
 
 //Payment ticket
+export const PAYMENT_TICKET_REQUEST = "@ticketBookingReducer/PAYMENT_TICKET_REQUEST";
 export const PAYMENT_TICKET_SUCCESS = "@ticketBookingReducer/PAYMENT_TICKET_SUCCESS";
 export const PAYMENT_TICKET_FAILED = "@ticketBookingReducer/PAYMENT_TICKET_FAILED";
 // Choose seat
