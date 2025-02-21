@@ -22,14 +22,13 @@ const actUserDetailsFail = (error) => {
   };
 };
 
-const actGetUserDetails = (keyword = "") => {
+const actGetUserDetails = (id) => {
   return (dispatch) => {
     dispatch(actUserDetailsRequest());
 
     const fetchUserDetails = async () => {
       try {
-        const params = { maNhom: GROUP_ID };
-        const userDetails = await userApi.getUserDetails(params, keyword);
+        const userDetails = await userApi.getUserDetails(id);
         dispatch(actUserDetailsSuccess(userDetails));
       } catch (error) {
         dispatch(actUserDetailsFail(error));

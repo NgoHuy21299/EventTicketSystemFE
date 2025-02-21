@@ -201,6 +201,8 @@ function MuiEnhancedTable(props) {
       setOpenModalUser(true);
       setUserEdit(id);
       dispatch(actGetUserDetails(id));
+      console.log(userEditData);
+      
     } else {
       setOpenModalEvent(true);
       setEventEdit(id);
