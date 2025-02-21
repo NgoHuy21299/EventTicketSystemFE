@@ -68,6 +68,24 @@ const actBookTicket = (ticket) => {
   };
 };
 
+/*
+ * payment return
+ */
+const actPaymentReturn = () => {
+  return (dispatch) => {
+    dispatch(actPaymentTicketRequest());
+    (async () => {
+      try {
+        const payReturnResponse = await ticketBookingApi.paymentReturn();
+        const paymentResult = await ticketBookingApi.processPayment(payReturnResponse);
+        dispatch(actPaymentTicketSuccess(paymentResult))
+      } catch (error) {
+        dispatch(actPaymentTicketFail(error));
+      }
+    })();
+  };
+};
+
 const actBookTicketRequest = () => ({
   type: actType.BOOK_TICKET_REQUEST,
 });
@@ -91,6 +109,10 @@ const actPaymentTicketFail = (error) => ({
 
 const actPaymentTicketSuccess = () => ({
   type: actType.PAYMENT_TICKET_SUCCESS,
+});
+
+const actPaymentTicketRequest = () => ({
+  type: actType.PAYMENT_TICKET_REQUEST,
 });
 
 /*
@@ -117,4 +139,6 @@ export {
   actBookTicketFail,
   actPaymentTicketSuccess,
   actPaymentTicketFail,
+  actPaymentTicketRequest,
+  actPaymentReturn
 };
