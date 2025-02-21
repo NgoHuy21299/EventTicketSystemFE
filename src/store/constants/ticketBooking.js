@@ -18,5 +18,8 @@ export const PAYMENT_TICKET_FAILED = "@ticketBookingReducer/PAYMENT_TICKET_FAILE
 // Choose seat
 export const CHOOSE_SEAT = "@ticketBookingReducer/CHOOSE_SEAT";
 
+// Notification
+export const GET_NOTIFICATION = "@ticketBookingReducer/GET_NOTIFICATION";
+
 // Close modal
 export const CLOSE_MODAL = "@ticketBookingReducer/CLOSE_MODAL";

@@ -36,15 +36,14 @@ const actUserProfileSuccess = (data) => ({
 /*
  * Update user profile
  */
-const actUpdateUserProfile = (user, setShowModal) => {
+const actUpdateUserProfile = (user) => {
   return async (dispatch) => {
     dispatch(actUpdateUserProfileRequest());
 
     try {
       const updatedUser = await userApi.updateUserProfile(user);
       dispatch(actUpdateUserProfileSuccess(updatedUser));
-      setShowModal(true);
-      
+
       // After successful update, fetch the updated profile
       const request = { taiKhoan: user.taiKhoan };
       dispatch(actGetUserProfile(request));
