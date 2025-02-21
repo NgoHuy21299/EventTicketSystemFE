@@ -27,7 +27,7 @@ const ticketBookingApi = {
   },
   paymentReturn: () => {
     const queryParams = window.location.search;
-    const url = `user/vnpay-return`;
+    const url = `user/vnpay-return${queryParams}`;
     return axiosClient.get(url);
   },
   processPayment: (vnpayReturn) => {
