@@ -36,7 +36,7 @@ const userApi = {
     return axiosClient.get(url);
   },
   deleteUser: (userAccount) => {
-    const url = resourceName + `XoaNguoiDung?TaiKhoan=${userAccount}`;
+    const url = resourceName + `/${userAccount}`;
     return axiosClient.delete(url);
   },
   addUser: (formData) => {
