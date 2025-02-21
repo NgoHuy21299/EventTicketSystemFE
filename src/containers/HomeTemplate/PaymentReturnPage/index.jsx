@@ -27,6 +27,7 @@ const handleBack = () => {
   return (
     <>
     {renderLoader()}
+    {data && (
     <div className="container">
       {data?.responseCode === "00" ? (
         <>
@@ -59,6 +60,7 @@ const handleBack = () => {
         <button onClick={handleBack} className="back-button">Quay lại</button>
       </div>
     </div>
+    )}
     </>
   );
 
