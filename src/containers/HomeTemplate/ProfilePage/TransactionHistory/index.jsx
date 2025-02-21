@@ -150,12 +150,12 @@ const TransactionHistory = () => {
       });
 
       let status = row?.status;
-      if (status === "Pending payment") {
-        status = "Đang chờ thanh toán";
-      } else if (status === "Paid") {
+      if (status === "Success") {
         status = "Đã thanh toán";
+      } else if (status === "Failed") {
+        status = "Thanh toán thất bại";
       } else {
-        status = "Đã hủy";
+        status = "Đang chờ thanh toán";
       }
 
       return (
