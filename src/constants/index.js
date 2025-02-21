@@ -5,6 +5,11 @@ export const ROLE = {
   CLIENT: "User",
 };
 
+export const ROLE_ENUM = {
+  ADMIN: 1,
+  CLIENT: 2,
+};
+
 export const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 export const DEFAULT_CATEGORY = {

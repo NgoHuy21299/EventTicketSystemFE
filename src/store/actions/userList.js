@@ -8,8 +8,7 @@ const actGetUserList = (keyword = "") => {
 
     const fetchUserList = async () => {
       try {
-        const params = { maNhom: GROUP_ID };
-        const userList = await userApi.getUserList(params, keyword);
+        const userList = await userApi.getUserList(keyword);
         dispatch(actUserListSuccess(userList));
       } catch (error) {
         dispatch(actUserListFail(error));

@@ -1,23 +1,16 @@
 const headCells = [
   {
-    id: "STT",
+    id: "ID",
     numeric: false,
     disablePadding: true,
-    label: "Số thứ tự",
+    label: "Mã người dùng",
     sortFunction: true,
   },
   {
     id: "taiKhoan",
     numeric: false,
     disablePadding: false,
-    label: "Tài khoản",
-    sortFunction: false,
-  },
-  {
-    id: "matKhau",
-    numeric: false,
-    disablePadding: false,
-    label: "Mật khẩu",
+    label: "Tên",
     sortFunction: false,
   },
   {
@@ -32,6 +25,13 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     label: "Số điện thoại",
+    sortFunction: true,
+  },
+  {
+    id: "isActive",
+    numeric: false,
+    disablePadding: false,
+    label: "Đang hoạt động",
     sortFunction: true,
   },
   {

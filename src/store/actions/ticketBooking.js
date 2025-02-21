@@ -118,6 +118,14 @@ const actPaymentTicketSuccess = (data) => ({
 });
 
 /*
+ * Notification
+ */
+const actNotification = (message) => ({
+  type: actType.GET_NOTIFICATION,
+  payload: message,
+});
+
+/*
  * Choose seats
  */
 const actChooseSeat = (seat) => ({
@@ -167,4 +175,5 @@ export {
   actProcessPaymentFail,
   actProcessPaymentSuccess,
   actProcessPaymentRequest,
+  actNotification,
 };
