@@ -11,6 +11,7 @@ import userDetailsReducer from "./userDetails";
 import userListReducer from "./userList";
 import userManagementReducer from "./userManagement";
 import userProfileReducer from "./userProfile";
+import processPaymentReducer from "./processPayment";
 
 const rootReducer = combineReducers({
   eventList: eventListReducer,
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   ticketBooking: ticketBookingReducer,
   userProfile: userProfileReducer,
   baseAuth: baseAuthRedecers,
+  processPayment: processPaymentReducer,
 });
 
 export default rootReducer;
