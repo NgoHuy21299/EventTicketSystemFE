@@ -78,7 +78,7 @@ const actPaymentReturn = () => {
       try {
         const payReturnResponse = await ticketBookingApi.paymentReturn();
         const paymentResult = await ticketBookingApi.processPayment(payReturnResponse);
-        dispatch(actPaymentTicketSuccess(paymentResult))
+        dispatch(actPaymentTicketSuccess(paymentResult));
       } catch (error) {
         dispatch(actPaymentTicketFail(error));
       }
@@ -116,6 +116,14 @@ const actPaymentTicketRequest = () => ({
 });
 
 /*
+ * Notification
+ */
+const actNotification = (message) => ({
+  type: actType.GET_NOTIFICATION,
+  payload: message,
+});
+
+/*
  * Choose seats
  */
 const actChooseSeat = (seat) => ({
@@ -140,5 +148,6 @@ export {
   actPaymentTicketSuccess,
   actPaymentTicketFail,
   actPaymentTicketRequest,
-  actPaymentReturn
+  actPaymentReturn,
+  actNotification,
 };

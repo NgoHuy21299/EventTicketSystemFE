@@ -1,4 +1,5 @@
 import * as actType from "../constants/ticketBooking";
+import { useAuth } from "@/hooks";
 
 const initialState = {
   ticketBookingDetails: {
@@ -129,6 +130,24 @@ const ticketBookingReducer = (state = initialState, { type, payload }) => {
           title: "Thông báo",
           children: ["Thanh toán không thành công!", "Vui lòng kiểm tra lại giao dịch"],
           path: "/",
+        },
+      };
+
+    // Notification
+
+    case actType.GET_NOTIFICATION:
+      return {
+        ...state,
+        bookTicket: {
+          loading: false,
+          error: "",
+        },
+        modal: {
+          ...state.modal,
+          open: true,
+          title: "Hệ thống thông báo",
+          children: [payload],
+          path: "/auth/login",
         },
       };
 

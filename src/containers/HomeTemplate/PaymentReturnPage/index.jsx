@@ -25,13 +25,19 @@ const PaymentStatus = () => {
     <div className="container">
       <div className="row justify-center">
         <div className="md:w-1/2">
-          <div className={`message-box ${paymentData?.responseCode === "00" ? "_success" : "_failed"}`}>
+          <div
+            className={`message-box ${paymentData?.responseCode === "00" ? "_success" : "_failed"}`}
+          >
             {/* {paymentData?.responseCode === "00" ? (
               <FaCheckCircle className="icon-success" />
             ) : (
               <FaTimesCircle className="icon-failed" />
             )} */}
-            <h2>{paymentData?.responseCode === "00" ? "Your payment was successful" : "Your payment failed"}</h2>
+            <h2>
+              {paymentData?.responseCode === "00"
+                ? "Your payment was successful"
+                : "Your payment failed"}
+            </h2>
             <p>{paymentData?.message}</p>
             <ul>
               <li>Booking ID: {paymentData?.bookingId}</li>
