@@ -24,7 +24,7 @@ function UserDashBoard() {
 
   useEffect(() => {
     dispatch(actGetUserList());
-  }, [updateUser]);
+  }, []);
 
   const handleSearch = (value) => {
     dispatch(actGetUserList(value));

@@ -25,7 +25,7 @@ import Loader from "@/components/Loader";
 //Others
 import "./style.scss";
 import { userSchema } from "@/validators";
-import { GROUP_ID } from "@/constants";
+import { GROUP_ID, ROLE_ENUM } from "@/constants";
 import { userApi } from "@/api";
 import actGetUserDetails from "@/store/actions/userDetails";
 import { useRef } from "react";
@@ -50,29 +50,32 @@ function UserModal(props) {
   const form = useRef();
 
   const dispatch = useDispatch();
-  const handleClose = () => setOpenModalUser(false);
+
+  const handleClose = () => {
+    setOpenModalUser(false);
+    resetForm();
+  };
 
   let userEdit;
   if (data) {
-    userEdit = data[0];
+    userEdit = data;
   }
 
   const initialValuesAddUser = {
-    taiKhoan: "",
-    matKhau: "",
+    fullName: "",
     email: "",
-    soDT: "",
-    maLoaiNguoiDung: "",
-    hoTen: "",
+    password: "",
+    phoneNumber: "",
+    role: "",
   };
 
   const initialValuesEditUser = {
-    taiKhoan: userEdit?.taiKhoan,
-    matKhau: userEdit?.matKhau,
+    id: userAccount,
+    fullName: userEdit?.fullName,
     email: userEdit?.email,
-    soDT: userEdit?.soDT,
-    maLoaiNguoiDung: userEdit?.maLoaiNguoiDung,
-    hoTen: userEdit?.hoTen,
+    phoneNumber: userEdit?.phoneNumber,
+    role: userEdit?.role,
+    isActive: userEdit?.isActive,
   };
 
   const initialValues = modalType === "addUser" ? initialValuesAddUser : initialValuesEditUser;
@@ -91,12 +94,11 @@ function UserModal(props) {
     initialValues: initialValues,
     validationSchema: userSchema,
     onSubmit: (values) => {
-      values.maNhom = GROUP_ID;
       if (modalType === "addUser") {
         const fetchData = async () => {
           try {
             await userApi.addUser(values);
-            dispatch(actGetUserDetails(values.taiKhoan));
+            dispatch(actGetUserDetails(values.id));
             setOpenModalUser(false);
             resetForm();
             setSubmitError("");
@@ -108,8 +110,8 @@ function UserModal(props) {
       } else {
         const fetchData = async () => {
           try {
-            await userApi.editUser(values);
-            dispatch(actGetUserDetails(values.taiKhoan));
+            await userApi.editUser(userAccount, values);
+            dispatch(actGetUserDetails(values.id));
             setOpenModalUser(false);
             resetForm();
             setSubmitError("");
@@ -123,7 +125,7 @@ function UserModal(props) {
   });
 
   const handleChangeSelect = (e) => {
-    setFieldValue("maLoaiNguoiDung", e.target.value);
+    setFieldValue("role", e.target.value);
   };
 
   return (
@@ -152,47 +154,17 @@ function UserModal(props) {
               <FormControl fullWidth className="form__input-wrapper">
                 <FormLabel htmlFor="user-name">Họ và tên</FormLabel>
                 <TextField
-                  name="hoTen"
+                  name="fullName"
                   id="user-name"
                   variant="outlined"
                   fullWidth
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.hoTen}
-                  error={errors.hoTen && touched.hoTen ? true : false}
+                  value={values.fullName}
+                  error={errors.fullName && touched.fullName ? true : false}
                 />
-                {errors.hoTen && touched.hoTen && (
-                  <FormHelperText error>{errors.hoTen}</FormHelperText>
-                )}
-              </FormControl>
-              <FormControl fullWidth className="form__input-wrapper">
-                <FormLabel htmlFor="user-acount">Tài khoản</FormLabel>
-                <TextField
-                  name="taiKhoan"
-                  id="user-acount"
-                  variant="outlined"
-                  fullWidth
-                  disabled={modalType === "addUser" ? false : true}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.taiKhoan}
-                  error={errors.taiKhoan && touched.taiKhoan ? true : false}
-                />
-              </FormControl>
-              <FormControl fullWidth className="form__input-wrapper">
-                <FormLabel htmlFor="user-password">Mật khẩu</FormLabel>
-                <TextField
-                  name="matKhau"
-                  id="user-password"
-                  variant="outlined"
-                  fullWidth
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.matKhau}
-                  error={errors.matKhau && touched.matKhau ? true : false}
-                />
-                {errors.matKhau && touched.matKhau && (
-                  <FormHelperText error>{errors.matKhau}</FormHelperText>
+                {errors.fullName && touched.fullName && (
+                  <FormHelperText error>{errors.fullName}</FormHelperText>
                 )}
               </FormControl>
               <FormControl fullWidth className="form__input-wrapper">
@@ -211,37 +183,74 @@ function UserModal(props) {
                   <FormHelperText error>{errors.email}</FormHelperText>
                 )}
               </FormControl>
+              {modalType === "addUser" && (
+                <FormControl fullWidth className="form__input-wrapper">
+                  <FormLabel htmlFor="user-password">Mật khẩu</FormLabel>
+                  <TextField
+                    name="password"
+                    id="user-password"
+                    variant="outlined"
+                    fullWidth
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.password}
+                    error={errors.password && touched.password ? true : false}
+                  />
+                  {errors.password && touched.password && (
+                    <FormHelperText error>{errors.password}</FormHelperText>
+                  )}
+                </FormControl>
+              )}
               <FormControl fullWidth className="form__input-wrapper">
                 <FormLabel htmlFor="user-phoneNo">Số điện thoại</FormLabel>
                 <TextField
-                  name="soDT"
+                  name="phoneNumber"
                   id="user-phoneNo"
                   variant="outlined"
                   fullWidth
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.soDT}
-                  error={errors.soDT && touched.soDT ? true : false}
+                  value={values.phoneNumber}
+                  error={errors.phoneNumber && touched.phoneNumber ? true : false}
                 />
-                {errors.soDT && touched.soDT && (
-                  <FormHelperText error>{errors.soDT}</FormHelperText>
+                {errors.phoneNumber && touched.phoneNumber && (
+                  <FormHelperText error>{errors.phoneNumber}</FormHelperText>
                 )}
               </FormControl>
               <FormControl fullWidth className="form__input-wrapper">
                 <FormLabel id="user-type">Loại người dùng</FormLabel>
                 <Select
+                  name="role"
                   htmlFor="user-type"
+                  variant="outlined"
                   onChange={handleChangeSelect}
-                  value={values.maLoaiNguoiDung || ""}
-                  error={errors.maLoaiNguoiDung && touched.maLoaiNguoiDung ? true : false}
+                  value={values.role || ""}
+                  error={errors.role && touched.role ? true : false}
                 >
-                  <MenuItem value="KhachHang">Khách hàng</MenuItem>
-                  <MenuItem value="QuanTri">Quản trị</MenuItem>
+                  <MenuItem value={ROLE_ENUM.CLIENT}>Người dùng</MenuItem>
+                  <MenuItem value={ROLE_ENUM.ADMIN}>Quản trị</MenuItem>
                 </Select>
-                {errors.maLoaiNguoiDung && touched.maLoaiNguoiDung && (
-                  <FormHelperText error>{errors.maLoaiNguoiDung}</FormHelperText>
+                {errors.role && touched.role && (
+                  <FormHelperText error>{errors.role}</FormHelperText>
                 )}
               </FormControl>
+              {modalType === "editUser" && (
+                <FormControl fullWidth className="form__input-wrapper">
+                  <FormLabel id="user-status">Trạng thái</FormLabel>
+                  <Select
+                    htmlFor="user-status"
+                    onChange={handleChangeSelect}
+                    value={values.isActive || ""}
+                    error={errors.isActive && touched.isActive ? true : false}
+                  >
+                    <MenuItem value={true}>Đang hoạt động</MenuItem>
+                    <MenuItem value={false}>Không hoạt động</MenuItem>
+                  </Select>
+                  {errors.isActive && touched.isActive && (
+                    <FormHelperText error>{errors.isActive}</FormHelperText>
+                  )}
+                </FormControl>
+              )}
               <Box>
                 <SubmitButton sx={{ py: 1, mt: 2 }}>{button}</SubmitButton>
               </Box>

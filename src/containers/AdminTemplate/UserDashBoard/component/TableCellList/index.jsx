@@ -22,28 +22,24 @@ const UserTableCells = (props) => {
         sx={{ width: "200px", height: "100px" }}
         className="management-table__table-cell table-cell__user-account"
       >
-        {row.taiKhoan}
-      </TableCell>
-      <TableCell
-        align="left"
-        sx={{ width: "200px", height: "100px" }}
-        className="management-table__table-cell table-cell__user-password"
-      >
-        {row.matKhau}
+        {row.fullName}
       </TableCell>
       <TableCell className="management-table__table-cell table-cell__user-email">
         {row.email}
       </TableCell>
       <TableCell className="management-table__table-cell table-cell__user-phoneNo">
-        {row.soDT}
+        {row.phoneNumber}
+      </TableCell>
+      <TableCell className="management-table__table-cell table-cell__user-isActive">
+        {row.isActive ? "Đang hoạt động" : "Không hoạt động"}
       </TableCell>
       <TableCell
         align="right"
         sx={{ width: "150px" }}
         className="management-table__table-cell table-cell__management-actions"
       >
-        <DeleteEventBtn onClick={() => handleDeleteEvent(row.taiKhoan)} />
-        <EditEventBtn onClick={() => handleEditEvent(row.taiKhoan)} />
+        <DeleteEventBtn onClick={() => handleDeleteEvent(row.id)} />
+        <EditEventBtn onClick={() => handleEditEvent(row.id)} />
       </TableCell>
     </>
   );
