@@ -30,6 +30,13 @@ import { userApi } from "@/api";
 import actGetUserDetails from "@/store/actions/userDetails";
 import { useRef } from "react";
 
+/** todo
+ * đỏi trạng thái
+phân quyền event controller
+bỏ nút xoá
+reload on register
+ */ 
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -67,6 +74,7 @@ function UserModal(props) {
     password: "",
     phoneNumber: "",
     role: "",
+    isActive: true,
   };
 
   const initialValuesEditUser = {
@@ -74,8 +82,8 @@ function UserModal(props) {
     fullName: userEdit?.fullName,
     email: userEdit?.email,
     phoneNumber: userEdit?.phoneNumber,
-    role: userEdit?.role,
-    isActive: userEdit?.isActive,
+    role: userEdit?.role ?? ROLE_ENUM.CLIENT,
+    isActive: userEdit?.isActive ?? true,
   };
 
   const initialValues = modalType === "addUser" ? initialValuesAddUser : initialValuesEditUser;
@@ -128,6 +136,9 @@ function UserModal(props) {
     setFieldValue("role", e.target.value);
   };
 
+  const handleChangeSelectStatus = (e) => {
+    setFieldValue("isActive", e.target.value);
+  };
   return (
     <Modal
       open={openModalUser}
@@ -218,13 +229,13 @@ function UserModal(props) {
                 )}
               </FormControl>
               <FormControl fullWidth className="form__input-wrapper">
-                <FormLabel id="user-type">Loại người dùng</FormLabel>
+                <FormLabel htmlFor="user-type">Loại người dùng</FormLabel>
                 <Select
                   name="role"
-                  htmlFor="user-type"
+                  id="user-type"
                   variant="outlined"
                   onChange={handleChangeSelect}
-                  value={values.role || ""}
+                  value={values.role}
                   error={errors.role && touched.role ? true : false}
                 >
                   <MenuItem value={ROLE_ENUM.CLIENT}>Người dùng</MenuItem>
@@ -236,11 +247,14 @@ function UserModal(props) {
               </FormControl>
               {modalType === "editUser" && (
                 <FormControl fullWidth className="form__input-wrapper">
-                  <FormLabel id="user-status">Trạng thái</FormLabel>
+                  <FormLabel htmlFor="user-status">Trạng thái</FormLabel>
                   <Select
                     htmlFor="user-status"
-                    onChange={handleChangeSelect}
-                    value={values.isActive || ""}
+                    name="isActive"
+                    id="user-status"
+                    variant="outlined"
+                    onChange={handleChangeSelectStatus}
+                    value={values.isActive}
                     error={errors.isActive && touched.isActive ? true : false}
                   >
                     <MenuItem value={true}>Đang hoạt động</MenuItem>
