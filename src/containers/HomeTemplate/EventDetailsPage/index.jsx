@@ -119,7 +119,7 @@ function EventDetailsPage() {
                     size="large"
                     className="btn-wrapper btn-outline top-info__btn"
                     startIcon={<FontAwesomeIcon icon={faPlay} />}
-                    href={data.trailer}
+                    href={data.trailerUrls}
                   >
                     Play Trailer
                   </Button>
