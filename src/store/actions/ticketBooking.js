@@ -1,5 +1,10 @@
 import * as actType from "../constants/ticketBooking";
 import { ticketBookingApi } from "@/api";
+import {
+  PROCESS_PAYMENT_FAIL,
+  PROCESS_PAYMENT_REQUEST,
+  PROCESS_PAYMENT_SUCCESS,
+} from "../constants/processPayment";
 
 /*
  * Fetch ticket booking details
@@ -73,14 +78,14 @@ const actBookTicket = (ticket) => {
  */
 const actPaymentReturn = () => {
   return (dispatch) => {
-    dispatch(actPaymentTicketRequest());
+    dispatch(actProcessPaymentRequest());
     (async () => {
       try {
-        const payReturnResponse = await ticketBookingApi.paymentReturn();
-        const paymentResult = await ticketBookingApi.processPayment(payReturnResponse);
-        dispatch(actPaymentTicketSuccess(paymentResult))
+        const payReturnResponse = await ticketBookingApi.paymentReturn();  
+        await ticketBookingApi.processPayment(payReturnResponse); 
+        dispatch(actProcessPaymentSuccess(payReturnResponse));
       } catch (error) {
-        dispatch(actPaymentTicketFail(error));
+        dispatch(actProcessPaymentFail(error));
       }
     })();
   };
@@ -107,12 +112,17 @@ const actPaymentTicketFail = (error) => ({
   payload: error,
 });
 
-const actPaymentTicketSuccess = () => ({
+const actPaymentTicketSuccess = (data) => ({
   type: actType.PAYMENT_TICKET_SUCCESS,
+  payload: data,
 });
 
-const actPaymentTicketRequest = () => ({
-  type: actType.PAYMENT_TICKET_REQUEST,
+/*
+ * Notification
+ */
+const actNotification = (message) => ({
+  type: actType.GET_NOTIFICATION,
+  payload: message,
 });
 
 /*
@@ -130,6 +140,28 @@ const actCloseModal = () => ({
   type: actType.CLOSE_MODAL,
 });
 
+//process payment
+const actProcessPaymentRequest = () => {
+  return {
+    type: PROCESS_PAYMENT_REQUEST,
+  };
+};
+
+const actProcessPaymentSuccess = (data) => {
+  return {
+    type: PROCESS_PAYMENT_SUCCESS,
+    payload: data,
+  };
+};
+
+const actProcessPaymentFail = (error) => {
+  return {
+    type: PROCESS_PAYMENT_FAIL,
+    payload: error,
+  };
+};
+//
+
 export {
   actGetTicketBookingDetails,
   actBookTicket,
@@ -139,6 +171,9 @@ export {
   actBookTicketFail,
   actPaymentTicketSuccess,
   actPaymentTicketFail,
-  actPaymentTicketRequest,
-  actPaymentReturn
+  actPaymentReturn,
+  actProcessPaymentFail,
+  actProcessPaymentSuccess,
+  actProcessPaymentRequest,
+  actNotification,
 };

@@ -1,49 +1,78 @@
 import { useEffect } from "react";
-// import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { actPaymentReturn } from "@/store/actions/ticketBooking";
 import "./style.scss";
+import checkLogo from "@/assets/images/check.png";
+import cancelLogo from "@/assets/images/cancel.png";
+import Loader from "@/components/Loader";
 
+const handleBack = () => {
+  window.location.href = "/";
+};
 const PaymentStatus = () => {
   const dispatch = useDispatch();
-
-  const { paymentData, loading, error } = useSelector((state) => state.payment);
+  const data = useSelector((state) => state.processPayment.data);
+  const loading = useSelector((state) => state.processPayment.loading);
 
   useEffect(() => {
     dispatch(actPaymentReturn());
   }, [dispatch]);
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p className="error">Error: {error}</p>;
-  }
-
+  const renderLoader = () => {
+    if (loading) return <Loader />;
+  };
   return (
-    <div className="container">
-      <div className="row justify-center">
-        <div className="md:w-1/2">
-          <div className={`message-box ${paymentData?.responseCode === "00" ? "_success" : "_failed"}`}>
-            {/* {paymentData?.responseCode === "00" ? (
-              <FaCheckCircle className="icon-success" />
+    <>
+      {renderLoader()}
+      {data && (
+        <div className="payment-page">
+          <div className="container">
+            {data?.responseCode === "00" ? (
+              <>
+                <img src={checkLogo} alt="Success" className="success-image" />
+                <div className="payment-success">
+                  <h1>Thanh Toán Thành Công</h1>
+                  <div className="transaction-info">
+                    <h4>THÔNG TIN GIAO DỊCH</h4>
+                    <p>
+                      <strong>Hình thức thanh toán:</strong> {data?.bankCode}
+                    </p>
+                    <p>
+                      <strong>Nội dung:</strong> thanh toán cho đơn hàng {data?.bookingId}
+                    </p>
+                    <p>
+                      <strong>Số tiền thanh toán:</strong> {data?.amount} VND
+                    </p>
+                  </div>
+                </div>
+              </>
             ) : (
-              <FaTimesCircle className="icon-failed" />
-            )} */}
-            <h2>{paymentData?.responseCode === "00" ? "Your payment was successful" : "Your payment failed"}</h2>
-            <p>{paymentData?.message}</p>
-            <ul>
-              <li>Booking ID: {paymentData?.bookingId}</li>
-              <li>Transaction ID: {paymentData?.vnPayTranId}</li>
-              <li>Amount: {paymentData?.amount}</li>
-              <li>Bank Code: {paymentData?.bankCode}</li>
-              <li>Pay Date: {paymentData?.payDate}</li>
-            </ul>
+              <>
+                <img src={cancelLogo} alt="Failed" className="success-image" />
+                <div className="payment-fail">
+                  <h1>Thanh Toán Thất Bại</h1>
+                  <div className="transaction-info">
+                    <h4>LỖI THANH TOÁN</h4>
+                    <p>
+                      <strong>Mã lỗi:</strong> {data?.responseCode}
+                    </p>
+                    <p>
+                      <strong>Vui lòng thử lại hoặc liên hệ hỗ trợ.</strong>
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
+
+            <div className="button-container">
+              <button onClick={handleBack} className="back-button">
+                Quay lại
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

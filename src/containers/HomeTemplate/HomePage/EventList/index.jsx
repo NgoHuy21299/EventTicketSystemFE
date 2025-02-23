@@ -14,52 +14,15 @@ import Loader from "@/components/Loader";
 //Components
 import MultipleItems from "@/components/ReactSlick/MultipleItems";
 import actGetEventList from "@/store/actions/eventList";
-import { useSearchParams } from "react-router-dom";
 import Modal from "@/components/Modal";
 
 // Redux actions
-import {
-  actCloseModal,
-  actPaymentTicketSuccess,
-  actPaymentTicketFail,
-} from "@/store/actions/ticketBooking";
+import { actCloseModal } from "@/store/actions/ticketBooking";
 
 function EventList() {
-  const [searchParams, setSearchParams] = useSearchParams();
   const modalProps = useSelector((rootReducer) => rootReducer.ticketBooking.modal);
 
   useEffect(() => {
-    const paramsObject = {};
-
-    searchParams.forEach((value, key) => {
-      paramsObject[key] = value;
-    });
-
-    console.log("paramsObject: ", paramsObject);
-
-    if (paramsObject.vnp_TransactionStatus) {
-      if (paramsObject.vnp_TransactionStatus === "00") {
-        dispatch(actPaymentTicketSuccess());
-      } else {
-        dispatch(actPaymentTicketFail());
-      }
-
-      searchParams.delete("vnp_Amount");
-      searchParams.delete("vnp_BankCode");
-      searchParams.delete("vnp_CardType");
-      searchParams.delete("vnp_OrderInfo");
-      searchParams.delete("vnp_PayDate");
-      searchParams.delete("vnp_ResponseCode");
-      searchParams.delete("vnp_TmnCode");
-      searchParams.delete("vnp_TransactionNo");
-      searchParams.delete("vnp_TransactionStatus");
-      searchParams.delete("vnp_TxnRef");
-      searchParams.delete("vnp_SecureHash");
-      searchParams.delete("vnp_BankTranNo");
-
-      setSearchParams(searchParams);
-    }
-    
     const filterRequest = {
       isUpcoming: true,
     };
