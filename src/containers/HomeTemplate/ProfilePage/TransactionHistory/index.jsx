@@ -109,6 +109,7 @@ const TransactionHistory = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [open, setOpen] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState(null);
+  const [selectedBooking, setSelectedBooking] = useState(null);
 
   const rows = content?.bookings;
 
@@ -119,8 +120,9 @@ const TransactionHistory = () => {
     setPage(0);
   };
 
-  const handleTicketClick = (ticket) => {
-    setSelectedTicket(ticket);
+  const handleTicketClick = (booking) => {
+    setSelectedBooking(booking);
+    setSelectedTicket(booking?.tickets);
     setOpen(true);
   };
 
@@ -161,9 +163,18 @@ const TransactionHistory = () => {
       return (
         <TableRow key={row.bookedAt}>
           <TableCell align="center">
-            <span onClick={() => handleTicketClick(row?.tickets)} style={{ cursor: "pointer", color: "blue" }}>
-              {row?.bookingId}
-            </span>
+            {seats.length > 0 ? (
+              <span 
+                onClick={() => handleTicketClick(row)} 
+                style={{ cursor: "pointer", color: "blue" }}
+              >
+                {row?.bookingId}
+              </span>
+            ) : (
+              <span style={{ color: "black" }}>
+                {row?.bookingId}
+              </span>
+            )}
           </TableCell>
           <TableCell align="center">{row?.eventName}</TableCell>
           <TableCell align="center">{row?.eventDate}</TableCell>
@@ -217,15 +228,29 @@ const TransactionHistory = () => {
         </Table>
       </TableContainer>
       <Modal open={open} onClose={handleClose}>
-        <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 }}>
+        <Box sx={{ 
+          position: 'absolute', 
+          top: '50%', 
+          left: '50%', 
+          transform: 'translate(-50%, -50%)', 
+          width: 400, 
+          bgcolor: 'background.paper', 
+          border: '2px solid #000', 
+          boxShadow: 24, 
+          p: 4 
+        }}>
           <Typography variant="h6" component="h2" align="center">
             Mã vé của bạn
           </Typography>
-          {selectedTicket?.map((ticket, idx) => (
-            <Typography key={idx} sx={{ mt: 2 }}>
-              {ticket.row}{ticket.number}: {ticket.ticketNumber}
-            </Typography>
-          ))}
+          
+          {/* Thêm QR code */}
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+            <img 
+              src={`data:image/png;base64,${selectedBooking?.qrCode}`}
+              alt="QR Code"
+              style={{ width: '200px', height: '200px' }}
+            />
+          </Box>
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
             <Button variant="contained" onClick={handleClose}>Đóng</Button>
           </Box>
