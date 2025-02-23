@@ -10,7 +10,7 @@ const Footer = () => (
   <Typography variant="body2" align="center" className="auth-footer">
     Copyright &copy;{" "}
     <Link to="/" style={{ color: "#fff" }}>
-      Finnkino
+      Event Ticketing System
     </Link>
     {", "}
     {new Date().getFullYear()}
