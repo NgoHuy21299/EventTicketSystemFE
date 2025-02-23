@@ -11,7 +11,7 @@ const AdminFooter = () => {
     <Typography variant="body2" align="center" className="admin-footer">
       Copyright &copy;{" "}
       <Link to="/" style={{ color: "#070707" }}>
-        Finnkino
+        Event Ticketing System
       </Link>
       {", "}
       {new Date().getFullYear()}

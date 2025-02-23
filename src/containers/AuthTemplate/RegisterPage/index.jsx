@@ -146,7 +146,7 @@ const RegisterPage = () => {
         className="accept-policies"
         label={
           <Box component="p">
-            Tôi chấp nhận <Link href="#">điều khoản và dịch vụ</Link> của Finnkino.
+            Tôi chấp nhận <Link href="#">điều khoản và dịch vụ</Link> của Event Ticketing System.
           </Box>
         }
       />

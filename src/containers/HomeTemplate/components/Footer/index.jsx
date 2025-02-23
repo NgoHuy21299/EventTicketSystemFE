@@ -28,7 +28,7 @@ function Footer() {
       >
         <Grid container className="footer__list">
           <Grid item xs={12} md={3} className="footer__list-item">
-            <p className="footer__list-title">Finnkino</p>
+            <p className="footer__list-title">Event Ticketing System</p>
             <a className="footer__list-link" href="/">
               Sự kiện
             </a>
@@ -39,7 +39,7 @@ function Footer() {
               Việc làm
             </a>
             <a className="footer__list-link" href="/">
-              Finnkino Oy
+              Event Ticketing System
             </a>
           </Grid>
           <Grid item xs={12} md={3} className="footer__list-item">
@@ -60,7 +60,7 @@ function Footer() {
               Điều khoản sử dụng
             </a>
             <a className="footer__list-link" href="/">
-              Các điều khoản của Finnkino Lab
+              Các điều khoản của Event Ticketing System
             </a>
           </Grid>
           <Grid item xs={12} lg={3} md={12} className="footer__list-item  list--social">
@@ -85,7 +85,7 @@ function Footer() {
             </a>
           </Grid>
         </Grid>
-        <p className="footer__rights pt-5 pb-5">Finnkino Oy - All rights reserved</p>
+        <p className="footer__rights pt-5 pb-5">Event Ticketing System - All rights reserved</p>
       </Grid>
     </footer>
   );
