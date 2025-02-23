@@ -1,10 +1,14 @@
+.payment-page {
+  background-color: var(--dark-gray);
+  padding: 38px;
+}
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: Arial, sans-serif;
   max-width: 600px;
-  margin: 50px auto;
+  margin: auto;
   padding: 20px;
 }
 
@@ -21,9 +25,9 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
   text-align: center;
-
+  background-color: #fff;
   h1 {
-    color: #4CAF50;
+    color: #4caf50;
   }
 }
 
@@ -34,8 +38,9 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
   text-align: center;
+  background-color: #fff;
   h1 {
-    color: RGB(255,97,116);
+    color: RGB(255, 97, 116);
   }
 }
 .transaction-info {
@@ -68,8 +73,8 @@
   }
   color: var(--black);
   background-color: var(--primary);
-  border-radius: 0;
-  border: 1px solid #ccc;
+  border-radius: 5px;
+  border: 1px solid #929292;
 
   &:hover {
     background-color: var(--hover-primary);
