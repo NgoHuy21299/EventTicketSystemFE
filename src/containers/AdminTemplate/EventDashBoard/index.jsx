@@ -41,6 +41,13 @@ function EventDashBoard() {
     dispatch(actGetEventList(filterRequest));
   };
 
+  const handleModalSubmitSuccess = () => {
+    const filterRequest = {
+      search: search
+    };
+    dispatch(actGetEventList(filterRequest)); // Refresh user list after form submission
+  }; 
+
   return (
     <>
       <Container sx={{ overflow: "hidden" }}>
@@ -51,12 +58,14 @@ function EventDashBoard() {
           dataList={eventList}
           TableCellList={EventTableCells}
           tableType="event"
+          onSubmitSuccess={handleModalSubmitSuccess}
           loading={eventListLoading}
         />
       </Container>
       <EventModal
         openModalEvent={openModalEvent}
         setOpenModalEvent={setOpenModalEvent}
+        onSubmitSuccess={handleModalSubmitSuccess}
         title="Thêm sự kiện mới"
         button="Thêm sự kiện"
         modalType="addEvent"

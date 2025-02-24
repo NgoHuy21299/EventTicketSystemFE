@@ -16,6 +16,7 @@ import headCells from "./constants";
 
 function UserDashBoard() {
   const [openModalUser, setOpenModalUser] = useState(false);
+  const [search, setSearch] = useState("");
 
   const dispatch = useDispatch();
   const userList = useSelector((state) => state.userList.data);
@@ -28,8 +29,13 @@ function UserDashBoard() {
 
   const handleSearch = (value) => {
     dispatch(actGetUserList(value));
+    setSearch(value);
     dispatch(actUserDetailsSuccess(userList));
   };
+
+  const handleModalSubmitSuccess = () => {
+    dispatch(actGetUserList(search)); // Refresh user list after form submission
+  }; 
 
   return (
     <>
@@ -46,6 +52,7 @@ function UserDashBoard() {
           TableCellList={UserTableCells}
           tableType="user"
           loading={userListLoading}
+          onSubmitSuccess={handleModalSubmitSuccess}
         />
       </Container>
       <UserModal
@@ -54,6 +61,7 @@ function UserDashBoard() {
         title="Thêm người dùng"
         button="Thêm người dùng"
         modalType="addUser"
+        onSubmitSuccess={handleModalSubmitSuccess}
       />
     </>
   );

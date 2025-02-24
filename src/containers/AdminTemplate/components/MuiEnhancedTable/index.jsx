@@ -172,7 +172,7 @@ EnhancedTableToolbar.propTypes = {
 };
 
 function MuiEnhancedTable(props) {
-  const { tableType, loading, headCells, TableCellList } = props;
+  const { tableType, loading, headCells, TableCellList, onSubmitSuccess } = props;
   let { dataList } = props;
 
   const [order, setOrder] = React.useState("asc");
@@ -214,11 +214,9 @@ function MuiEnhancedTable(props) {
 
     if (window.confirm(msg + id)) {
       if (tableType === "user") {
-        await fetchUserDelete(id);
-        window.location.reload();
       } else {
         await fetchEventDelete(id);
-        window.location.reload();
+        onSubmitSuccess();
       }
     }
   };
@@ -365,6 +363,7 @@ function MuiEnhancedTable(props) {
             loading={eventLoading}
             modalType="editEvent"
             eventId={eventEdit}
+            onSubmitSuccess={onSubmitSuccess}
           />
           <UserModal
             openModalUser={openModalUser}
@@ -375,6 +374,7 @@ function MuiEnhancedTable(props) {
             loading={userLoading}
             modalType="editUser"
             userAccount={userEdit}
+            onSubmitSuccess={onSubmitSuccess}
           />
           <ScheduleModal
             eventId={showTimeEvent}
