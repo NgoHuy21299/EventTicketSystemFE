@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 
 // Routes config
-import { BrowserRouter as Router } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 import Routes from "@/routes";
 
 //Datepicker
