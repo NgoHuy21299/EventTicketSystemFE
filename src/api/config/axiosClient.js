@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks";
 
 const axiosClient = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
@@ -20,8 +22,12 @@ axiosClient.interceptors.response.use(
   (response) => response?.data,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem("user");
-      window.location.href = "/auth/login";
+      const auth = useAuth();
+      const navigate = useNavigate();
+
+      auth.logout();
+      navigate("/auth/login");
+      // window.location.href = "/auth/login";
     }
     Promise.reject(error.response.data);
   },
