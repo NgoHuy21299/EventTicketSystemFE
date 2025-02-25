@@ -38,7 +38,6 @@ const UserTableCells = (props) => {
         sx={{ width: "150px" }}
         className="management-table__table-cell table-cell__management-actions"
       >
-        <DeleteEventBtn onClick={() => handleDeleteEvent(row.id)} />
         <EditEventBtn onClick={() => handleEditEvent(row.id)} />
       </TableCell>
     </>

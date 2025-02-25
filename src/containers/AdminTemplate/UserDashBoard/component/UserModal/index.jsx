@@ -50,7 +50,7 @@ const style = {
 };
 
 function UserModal(props) {
-  const { openModalUser, setOpenModalUser, title, button, data, loading, userAccount, modalType } =
+  const { openModalUser, setOpenModalUser, title, button, data, loading, userAccount, modalType, onSubmitSuccess } =
     props;
 
   const [submitError, setSubmitError] = React.useState("");
@@ -110,6 +110,7 @@ function UserModal(props) {
             setOpenModalUser(false);
             resetForm();
             setSubmitError("");
+            onSubmitSuccess();
           } catch (error) {
             setSubmitError(error);
           }
@@ -123,6 +124,7 @@ function UserModal(props) {
             setOpenModalUser(false);
             resetForm();
             setSubmitError("");
+            onSubmitSuccess();
           } catch (error) {
             setSubmitError(error);
           }

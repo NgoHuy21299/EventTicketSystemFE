@@ -47,7 +47,7 @@ const style = {
 };
 
 function EventModal(props) {
-  const { openModalEvent, setOpenModalEvent, title, button, data, loading, eventId, modalType } =
+  const { openModalEvent, setOpenModalEvent, title, button, data, loading, eventId, modalType, onSubmitSuccess } =
     props;
   const [imgSrc, setImgSrc] = useState(null);
   const [serverError, setServerError] = useState("");
@@ -98,7 +98,7 @@ function EventModal(props) {
     try {
       await eventApi.addEvent(formData);
       setOpenModalEvent(false);
-      window.location.reload();
+      onSubmitSuccess();
     } catch (error) {
       setServerError(error);
     }
@@ -108,7 +108,7 @@ function EventModal(props) {
     try {
       await eventApi.editEvent(eventID, formData);
       setOpenModalEvent(false);
-      document.location.reload();
+      onSubmitSuccess();
     } catch (error) {
       setServerError(error);
     }
