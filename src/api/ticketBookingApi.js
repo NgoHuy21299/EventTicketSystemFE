@@ -26,7 +26,14 @@ const ticketBookingApi = {
     });
   },
   paymentReturn: () => {
-    const queryParams = window.location.search;
+    let queryParams;
+    const hash = window.location.hash;
+    if (hash) {
+      queryParams = hash.split('payment-return')?.[1];
+    } else {
+      queryParams = window.location.search;
+    }
+  
     const url = `user/vnpay-return${queryParams}`;
     return axiosClient.get(url);
   },
