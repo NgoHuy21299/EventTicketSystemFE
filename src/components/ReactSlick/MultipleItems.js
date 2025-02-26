@@ -97,6 +97,7 @@ function MultipleItems({
   };
 
   const renderCarouselContent = () => {
+    if (!data) return null;
     return data?.map((item) => {
       switch (Component) {
         case "img":

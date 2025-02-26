@@ -17,6 +17,11 @@ const SignalRNotification = () => {
 
   // Use useCallback to prevent function recreation
   const startConnection = useCallback(() => {
+    // Kiểm tra nếu không có userEmail thì return null
+    if (!userEmail) {
+      return null;
+    }
+
     const baseURL = process.env.REACT_APP_BASE_URL;
     const signalRUrl = new URL(baseURL).origin;
     const connection = new signalR.HubConnectionBuilder()
@@ -30,21 +35,25 @@ const SignalRNotification = () => {
       .start()
       .then(() => {
         console.log("Connected to SignalR hub");
-
-        connection.invoke("RegisterUser", userEmail).catch((err) => {
-          console.error("Error registering user: ", err);
-        });
+        // Kiểm tra lại một lần nữa trước khi invoke
+        if (userEmail) {
+          connection.invoke("RegisterUser", userEmail).catch((err) => {
+            console.error("Error registering user: ", err);
+          });
+        }
       })
       .catch((err) => {
         console.error("SignalR Connection Error: ", err);
       });
 
-    // Handle receiving notifications
     connection.on("ReceiveMessage", (message, email) => {
       if (email === userEmail) {
         console.log("Notification received for user:", message);
         dispatch(actNotification(message));
-        auth.logout();
+        // Dọn dẹp connection trước khi logout
+        connection.stop().then(() => {
+          auth.logout();
+        });
       }
     });
 
@@ -53,17 +62,21 @@ const SignalRNotification = () => {
     });
 
     return connection;
-  }, [userEmail, dispatch]);
+  }, [userEmail, dispatch, auth]);
 
   useEffect(() => {
-    const connection = startConnection();
+    let connection = null;
+    
+    if (userEmail) {
+      connection = startConnection();
+    }
 
     return () => {
       if (connection) {
         connection.stop();
       }
     };
-  }, [startConnection]);
+  }, [startConnection, userEmail]);
 
   return <Modal actCloseModal={actCloseModal} modalProps={modalProps} />;
 };
