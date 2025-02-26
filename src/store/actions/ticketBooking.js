@@ -53,11 +53,6 @@ const actBookTicket = (ticket) => async (dispatch) => {
 
     const { bookingId: BookingId, totalAmount: Amount } = bookingResponse;
 
-    if (Amount < 1000) {
-      alert("Số tiền thanh toán phải từ 1000 trở lên!");
-      return dispatch(actBookTicketFail("Số tiền thanh toán phải từ 1000 trở lên!"));
-    }
-
     const Locale = "vn";
     const OrderType = "other";
     const BankCode = "";
@@ -71,13 +66,11 @@ const actBookTicket = (ticket) => async (dispatch) => {
     );
 
     if (!paymentResponse?.paymentUrl) {
-      alert("Không thể tạo thanh toán!");
       return dispatch(actBookTicketFail("Không thể tạo thanh toán!"));
     }
 
     window.location.href = paymentResponse.paymentUrl;
   } catch (error) {
-    alert("Có lỗi xảy ra: " + (error.message || "Không xác định!"));
     dispatch(actBookTicketFail(error.message || "Có lỗi xảy ra!"));
   }
 };
