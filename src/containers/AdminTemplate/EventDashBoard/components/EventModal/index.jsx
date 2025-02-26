@@ -99,6 +99,7 @@ function EventModal(props) {
       await eventApi.addEvent(formData);
       setOpenModalEvent(false);
       onSubmitSuccess();
+      resetForm();
     } catch (error) {
       setServerError(error);
     }
@@ -109,6 +110,7 @@ function EventModal(props) {
       await eventApi.editEvent(eventID, formData);
       setOpenModalEvent(false);
       onSubmitSuccess();
+      resetForm();
     } catch (error) {
       setServerError(error);
     }
