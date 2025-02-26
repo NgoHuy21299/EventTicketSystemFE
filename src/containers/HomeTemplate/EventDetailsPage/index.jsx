@@ -181,11 +181,7 @@ function EventDetailsPage() {
             <Grid container spacing={2} className="event-detail__content">
               <Grid item xs={12} md={7} className="event-detail__syno">
                 <h4 className="event-detail__content-title">Địa chỉ</h4>
-                <p>{data.venueAddress + ", " + data.venueName}</p>
-              </Grid>
-              <Grid item xs={12} md={5} className="event-detail__details">
-                <h4 className="event-detail__content-title">Thể loại</h4>
-                <p>{data.category}</p>
+                <p>{data.venueAddress}</p>
               </Grid>
             </Grid>
           </Container>
