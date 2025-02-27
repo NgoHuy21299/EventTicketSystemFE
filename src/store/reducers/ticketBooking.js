@@ -68,6 +68,22 @@ const ticketBookingReducer = (state = initialState, { type, payload }) => {
         },
       };
 
+    case actType.BOOK_TICKET_CHECK_SEATS_EMPTY:
+      return {
+        ...state,
+        bookTicket: {
+          loading: false,
+          error: "",
+        },
+        modal: {
+          ...state.modal,
+          open: true,
+          title: "Thông báo",
+          children: ["Vui lòng chọn ít nhất một chỗ ngồi! Bạn có thể mua được tối đa 5 ghế."],
+          path: "",
+        },
+      };
+
     case actType.BOOK_TICKET_SUCCESS:
       if (!state.selectedSeats.length) {
         return {
