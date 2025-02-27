@@ -10,6 +10,7 @@ export const GET_TICKET_BOOKING_DETAILS_FAIL =
 export const BOOK_TICKET_REQUEST = "@ticketBookingReducer/BOOK_TICKET_REQUEST";
 export const BOOK_TICKET_SUCCESS = "@ticketBookingReducer/BOOK_TICKET_SUCCESS";
 export const BOOK_TICKET_FAIL = "@ticketBookingReducer/BOOK_TICKETS__FAIL";
+export const BOOK_TICKET_CHECK_SEATS_EMPTY = "@ticketBookingReducer/BOOK_TICKET_CHECK_SEATS_EMPTY";
 
 //Payment ticket
 export const PAYMENT_TICKET_REQUEST = "@ticketBookingReducer/PAYMENT_TICKET_REQUEST";

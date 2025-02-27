@@ -45,6 +45,10 @@ const actBookTicket = (ticket) => async (dispatch) => {
   dispatch(actBookTicketRequest());
 
   try {
+    if (ticket.SeatedInfos.length === 0) {
+      return dispatch(actBookTicketCheckSeatEmpty());
+    }
+
     const bookingResponse = await ticketBookingApi.bookTicket(ticket);
 
     if (!bookingResponse.success) {
@@ -62,7 +66,7 @@ const actBookTicket = (ticket) => async (dispatch) => {
       Amount,
       Locale,
       BankCode,
-      OrderType
+      OrderType,
     );
 
     if (!paymentResponse?.paymentUrl) {
@@ -83,8 +87,8 @@ const actPaymentReturn = () => {
     dispatch(actProcessPaymentRequest());
     (async () => {
       try {
-        const payReturnResponse = await ticketBookingApi.paymentReturn();  
-        await ticketBookingApi.processPayment(payReturnResponse); 
+        const payReturnResponse = await ticketBookingApi.paymentReturn();
+        await ticketBookingApi.processPayment(payReturnResponse);
         dispatch(actProcessPaymentSuccess(payReturnResponse));
       } catch (error) {
         dispatch(actProcessPaymentFail(error));
@@ -104,6 +108,10 @@ const actBookTicketFail = (error) => ({
 
 const actBookTicketSuccess = () => ({
   type: actType.BOOK_TICKET_SUCCESS,
+});
+
+const actBookTicketCheckSeatEmpty = () => ({
+  type: actType.BOOK_TICKET_CHECK_SEATS_EMPTY,
 });
 
 /*
